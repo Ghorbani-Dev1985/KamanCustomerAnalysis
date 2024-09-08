@@ -42,6 +42,9 @@ const config : Config = {
        fontFamily: {
         IRANSansWeb: ["var(--font-IRANSansWeb-FD)"],
       },
+      backgroundImage: {
+        'loginBg' : 'url("/images/bg/loginBG.jpg")',
+    },
     },
     screens: {
       'xs': '480px',
