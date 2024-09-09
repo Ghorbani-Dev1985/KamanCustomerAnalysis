@@ -5,7 +5,7 @@ export interface TextFieldType {
    label: string,
    name: any,
    register: UseFormRegister<ContactUsType>,
-   placeholder: string,
+   placeholder?: string,
    ltr?: boolean,
    type?: string,
    required: boolean,
@@ -13,5 +13,5 @@ export interface TextFieldType {
    errors: any,
    customStyle?: string,
    isVisible?: boolean,
-   icon: JSXElementConstructor
+   icon?: JSXElementConstructor
 }
