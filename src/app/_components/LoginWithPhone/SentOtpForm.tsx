@@ -3,7 +3,7 @@ import React from 'react'
 import { HiMiniDevicePhoneMobile } from 'react-icons/hi2'
 import TextField from 'ui/TextField'
 
-const SentOtpForm = ({SendOtpHandler , register , errors , isPendingOtp}) => {
+const SentOtpForm = ({SendOtpHandler , register , errors}:any) => {
   return (
     <form className="w-full space-y-6" onSubmit={SendOtpHandler}>
     <div className="flex w-full flex-wrap md:flex-nowrap">
@@ -25,11 +25,11 @@ const SentOtpForm = ({SendOtpHandler , register , errors , isPendingOtp}) => {
             },
           }} ltr icon={<HiMiniDevicePhoneMobile className='size-7 text-gray-600'/>}/>
  </div>   
-     <Button disabled={isPendingOtp && true} fullWidth color="primary" className="py-6 disabled:opacity-50">
+     {/* <Button disabled={isPendingOtp && true} fullWidth color="primary" className="py-6 disabled:opacity-50">
         {
             isPendingOtp ? <p className='flex-center gap-x-4'><Spinner color='white' size='md' /> در حال ارسال کد تایید</p> : "ارسال کد تایید"
         }
-     </Button>
+     </Button> */}
  </form>
   )
 }

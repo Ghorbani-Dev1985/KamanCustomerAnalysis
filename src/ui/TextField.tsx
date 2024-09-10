@@ -20,7 +20,7 @@ const TextField = ({
       <div className="w-full">
        
         <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
-          <Input variant="bordered" color="primary" classNames={{inputWrapper: "border-primary-500"}} {...register(name, validationSchema)} autoComplete="off" size="md" type={isVisible ? "text" : type } label={label} isRequired={required && true} placeholder={placeholder && placeholder} className={`${ltr && "dir-ltr placeholder:text-right"} placeholder:text-right ${customStyle}`} errorMessage={errors && errors[name] && errors[name]?.message} endContent={icon}/>
+          <Input labelPlacement="outside" variant="bordered" color="primary" classNames={{inputWrapper: "border-primary-500", label: "group-data-[filled-within=true]:right-2 group-data-[filled-within=true]:left-auto" }} {...register(name, validationSchema)} autoComplete="off" size="lg" type={isVisible ? "text" : type } label={label} isRequired={required && true} placeholder={placeholder && placeholder} className={`${ltr && "dir-ltr placeholder:text-right"} placeholder:text-right ${customStyle}`} errorMessage={errors && errors[name] && errors[name]?.message} endContent={icon}/>
         </div>
       </div>
     );

@@ -20,7 +20,7 @@ const CheckOTPForm = ({ phoneNumber, onResendOtp, otpResponse, onBack }) => {
   const CheckOtpHandler = async (event) => {
     event.preventDefault();
     try {
-      const { message, user } = await mutateCheckOtp({ phoneNumber, otp });
+      // const { message, user } = await mutateCheckOtp({ phoneNumber, otp });
       toast.success(message);
       if (user.isActive) {
         router.replace("/");
@@ -28,7 +28,7 @@ const CheckOTPForm = ({ phoneNumber, onResendOtp, otpResponse, onBack }) => {
         router.replace("/completeProfile");
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      // toast.error(error?.response?.data?.message);
     }
   };
   useEffect(() => {
