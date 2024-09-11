@@ -9,9 +9,8 @@ export interface TextFieldType {
    ltr?: boolean,
    type?: string,
    required: boolean,
-   validationSchema: {},
    errors: any,
    customStyle?: string,
    showPassword?: boolean,
-   icon?: JSXElementConstructor
+   icon?: JSXElementConstructor,
 }

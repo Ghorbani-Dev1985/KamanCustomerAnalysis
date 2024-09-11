@@ -1,6 +1,4 @@
-import { Button, Input } from '@nextui-org/react'
 import React, { useState } from 'react'
-import { HiMiniDevicePhoneMobile } from 'react-icons/hi2'
 import SentOtpForm from './SentOtpForm';
 import CheckOTPForm from './CheckOtpForm';
 import { useForm } from 'react-hook-form';
@@ -10,7 +8,7 @@ import { SendOtp } from 'services/AuthServices';
 
 const LoginWithPhone = () => {
     const [step, setStep] = useState(2);
-    const {getValues , register , errors , handleSubmit} = useForm();
+   const {getValues} = useForm()
     const {
       isPending: isPendingOtp,
       data: OtpResponse,
@@ -37,10 +35,10 @@ const LoginWithPhone = () => {
     const RenderLoginSteps = () => {
       switch (step) {
             case 1:
-                return <SentOtpForm   register={register}
-                SendOtpHandler={handleSubmit(SendOtpHandler)}
+                return <SentOtpForm 
+                SendOtpHandler={SendOtpHandler}
                  isPendingOtp={isPendingOtp}
-                errors={errors}/>
+                />
             case 2:
                 return <CheckOTPForm  onBack={() => setStep((s) => s - 1)}
                 phoneNumber={getValues("PhoneNumber")}

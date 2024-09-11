@@ -9,7 +9,6 @@ const TextField = ({
   ltr,
   type = "text",
   required,
-  validationSchema = {},
   errors,
   customStyle,
   showPassword,
@@ -21,7 +20,7 @@ const TextField = ({
       {showPassword ? (
         <div className="relative">
           <input
-            {...register(name, validationSchema)}
+            {...register(name)}
             autoComplete="off"
             type={isVisible ? "text" : "password"}
             name={name}
@@ -33,7 +32,7 @@ const TextField = ({
             htmlFor={name}
             className={`${customStyle} absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto`}
           >
-            {label}
+            {label}{required && <span className="text-red-500">*</span>}
           </label>
           <div className="bg-primary-50 flex-center absolute inset-y-0 end-1.5 rounded-lg top-1 bottom-1 p-1.5">
             <button
@@ -52,7 +51,7 @@ const TextField = ({
       ) : (
         <div className="relative">
           <input
-            {...register(name, validationSchema)}
+            {...register(name)}
             autoComplete="off"
             type={type}
             name={name}
@@ -64,7 +63,7 @@ const TextField = ({
             htmlFor={name}
             className="absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
           >
-            {label}
+            {label}{required && <span className="text-red-500 mr-1">*</span>}
           </label>
           <div className="bg-primary-50 flex-center absolute inset-y-0 rounded-lg end-1.5 top-1 bottom-1 p-1.5 pointer-events-none">
             {icon}

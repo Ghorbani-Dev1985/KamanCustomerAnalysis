@@ -1,23 +1,25 @@
 'use client';
 import { UserPassType } from "@/types/loginRegisterFormType";
 import { Button, Spacer } from "@nextui-org/react";
-import React, { useState } from "react";
+import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BiLogoGmail } from "react-icons/bi";
 import { LoginWithEmailFN } from "services/AuthServices";
 import TextField from "ui/TextField";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginWithEmailValidationSchema } from "@/constants/FormValidations";
 
 const LoginWithEmail = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<UserPassType>({ mode: "onChange" });
+  } = useForm<UserPassType>({ mode: "onChange" , resolver: yupResolver(LoginWithEmailValidationSchema)});
  
   const LoginWithEmailHandler: SubmitHandler<UserPassType> = async (data) => {
     let formData = new FormData();
-    formData.append("username", data.username);
+    formData.append("username", data.email);
     formData.append("password", data.password);
     try { 
       const {data: userInfo} =  await LoginWithEmailFN(formData)
@@ -40,28 +42,12 @@ const LoginWithEmail = () => {
         onSubmit={handleSubmit(LoginWithEmailHandler)}
       >
         <TextField
-          name="username"
+          name="email"
           label=" ایمیل"
-          type="email"
           register={register}
           required={true}
           errors={errors}
           ltr
-          validationSchema={{
-            required: "لطفا ایمیل خود را وارد نمایید",
-            minLength: {
-              value: 3,
-              message: "حداقل ۳ کاراکتر وارد نمایید  ",
-            },
-            maxLength: {
-              value: 30,
-              message: "حداکثر ۳۰ کاراکتر وارد نمایید",
-            },
-            // pattern: {
-            //   value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}/g,
-            //   message: "لطفا ایمیل صحیح وارد نمایید",
-            // },
-          }}
           icon={<BiLogoGmail className="size-6 text-primary-700" />}
         />
         <TextField
@@ -71,21 +57,6 @@ const LoginWithEmail = () => {
           register={register}
           required={true}
           errors={errors}
-          validationSchema={{
-            required: "لطفا نام و نام خانوادگی را وارد نمایید",
-            minLength: {
-              value: 8,
-              message: "حداقل ۸ کاراکتر وارد نمایید  ",
-            },
-            maxLength: {
-              value: 30,
-              message: "حداکثر ۳۰ کاراکتر وارد نمایید",
-            },
-            // pattern: {
-            //   value: /^^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g,
-            //   message: "کلمه عبور  باید شامل حروف بزرگ و کوچک و عدد و کاراکتر باشد",
-            // },
-          }}
           showPassword={true}
         />
         <Spacer y={6}/>

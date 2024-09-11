@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@next/font": "^14.2.8",
     "@next/third-parties": "^14.2.8",
     "@nextui-org/react": "^2.4.6",
@@ -29,7 +30,8 @@
     "react-otp-input": "^3.1.1",
     "sanitize-html": "^2.13.0",
     "tailwind-variants": "^0.2.1",
-    "use-reducer-async": "^2.1.1"
+    "use-reducer-async": "^2.1.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.15",
