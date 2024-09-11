@@ -67,6 +67,13 @@ const config : Config = {
   plugins: [
     nextui({
      addCommonColors: true,
+     layout:{
+      radius: {
+        small: "0.125rem",
+        medium: "0.375rem", 
+        large: "0.5rem", 
+      },
+     },
      themes: {
       light: {
         screens: {

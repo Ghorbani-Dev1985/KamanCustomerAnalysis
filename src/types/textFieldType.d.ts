@@ -12,6 +12,6 @@ export interface TextFieldType {
    validationSchema: {},
    errors: any,
    customStyle?: string,
-   isVisible?: boolean,
+   showPassword?: boolean,
    icon?: JSXElementConstructor
 }

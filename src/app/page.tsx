@@ -1,7 +1,7 @@
 import React from "react";
 
 export const dynamic = "force-dynamic";
-import LoginRegister from "./_components/LoginRegister";
+import LoginRegister from "./_components/LoginRegisterTabs";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "ورود / ثبت نام",

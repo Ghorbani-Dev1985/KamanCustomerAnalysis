@@ -12,6 +12,7 @@ import Image from "next/image";
 import { Key } from '@react-types/shared';
 import LoginWithEmail from "./LoginWithEmail";
 import LoginWithPhone from "./LoginWithPhone/LoginWithPhone";
+import Register from "./Register";
 
 const LoginRegister = () => {
   const [selected, setSelected] = useState<Key>("login");
@@ -32,16 +33,19 @@ const LoginRegister = () => {
           <CardBody className="overflow-hidden ">
             <Tabs
               fullWidth
-              size="md"
+              size="lg"
               aria-label="Tabs form"
               selectedKey={selected}
               onSelectionChange={setSelected}
             >
               <Tab key="login" title="ورود با موبایل">
-                {/* <LoginWithPhone /> */}
+                <LoginWithPhone />
               </Tab>
               <Tab key="sign-up" title="ورود با ایمیل">
                 <LoginWithEmail />
+              </Tab>
+              <Tab key="register" title=" ایجاد حساب کاربری">
+                <Register />
               </Tab>
             </Tabs>
           </CardBody>

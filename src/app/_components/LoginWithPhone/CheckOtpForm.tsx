@@ -1,6 +1,6 @@
 "use client";
-import { CheckOtp } from "@/Services/AuthServices";
-import { Button } from "@nextui-org/react";
+
+import { Button, Spinner } from "@nextui-org/react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { BiAlarm, BiChevronRight } from "react-icons/bi";
 import { CiEdit } from "react-icons/ci";
 import OTPInput from "react-otp-input";
+import { CheckOtp } from "services/AuthServices";
 const RESEND_TIME = 90;
 
 const CheckOTPForm = ({ phoneNumber, onResendOtp, otpResponse, onBack }) => {
@@ -44,20 +45,20 @@ const CheckOTPForm = ({ phoneNumber, onResendOtp, otpResponse, onBack }) => {
           <BiChevronRight className="size-7" />
         </button>
       </div>
-      <p className="text-lg my-4"> لطفا کد تایید را وارد نمایید </p>
-      {otpResponse && (
+      <p className="flex-center font-normal my-5"> لطفا کد تایید را وارد نمایید </p>
+      {/* {otpResponse && (
         <p className="flex-center gap-1.5 my-4">
           {otpResponse?.message}
           <button onClick={onBack}>
             <CiEdit className="size-6 text-sky-500" />
           </button>
         </p>
-      )}
-      <form onSubmit={CheckOtpHandler} className="w-full max-w-sm">
+      )} */}
+      <form onSubmit={CheckOtpHandler} className="w-full">
         <OTPInput
           value={otp}
           onChange={setOtp}
-          numInputs={6}
+          numInputs={5}
           renderInput={(props) => (
             <input type="number" className="appearance-none" {...props} />
           )}
@@ -68,30 +69,24 @@ const CheckOTPForm = ({ phoneNumber, onResendOtp, otpResponse, onBack }) => {
             padding: "0.5rem",
             borderRadius: ".5rem",
             margin: "0 .2rem",
-            border: "1px solid #6d2c88",
+            border: "1px solid #2c51a3",
             outline: "none",
           }}
         />
-        <div className="flex-center my-4 text-slate-500">
+        <Button disabled={isPending && true} fullWidth color="primary" size='lg' className="disabled:bg-gray-500 disabled:opacity-70">
+        {
+            isPending ? <p className='flex-center gap-x-4'><Spinner color='white' size='md' /> در حال ارسال کد تایید</p> : "ارسال کد تایید"
+        }
+     </Button>
+        <div className="flex-center my-4 text-zinc-600 text-sm font-normal">
           {time > 0 ? (
             <p className="flex-center gap-1">
-              <BiAlarm className="size-5" /> {time} ثانیه تا ارسال مجدد کد
+              <BiAlarm className="size-4" /> {time} ثانیه تا ارسال مجدد کد
             </p>
           ) : (
             <button onClick={onResendOtp}>ارسال مجدد کد؟</button>
           )}
         </div>
-        {isPending ? (
-          <Loading />
-        ) : (
-          <Button
-            type="submit"
-            color="primary"
-            className="w-full hover:bg-secondary hover:opacity-100 rounded-lg py-6"
-          >
-            تایید
-          </Button>
-        )}
       </form>
     </>
   );
