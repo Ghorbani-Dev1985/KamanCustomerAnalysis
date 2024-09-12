@@ -1,32 +1,36 @@
 import { Button } from '@nextui-org/react';
 import React from 'react'
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { BiSolidUserDetail } from 'react-icons/bi';
+import { BiLogoGmail, BiSolidUserDetail } from 'react-icons/bi';
 import { HiMiniDevicePhoneMobile } from 'react-icons/hi2';
 import { AiOutlineUser } from "react-icons/ai";
 import { RegisterUser } from 'services/AuthServices';
 import TextField from 'ui/TextField';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterValidationSchema } from '@/constants/FormValidations';
+import { RegisterType } from '@/types/loginRegisterFormType';
 
 const Register = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
-      } = useForm<RegisterType>({ mode: "onChange" , resolver: yupResolver(RegisterValidationSchema) });
+       reset,
+        formState: { errors },
+      } = useForm<RegisterType>({ mode: "onChange" , resolver: yupResolver(RegisterValidationSchema)});
      
       const RegisterHandler: SubmitHandler<RegisterType> = async (data) => {
         let formData = new FormData();
-        formData.append("username", data.username);
-        formData.append("password", data.password);
+        formData.append("username", data.phone);
+        formData.append("first_name", data.first_name);
+        formData.append("last_name", data.last_name);
+        formData.append("phone", data.phone);
+        formData.append("email", data.email);
         try { 
-          const {data: userInfo} =  await RegisterUser(formData)
+          const {data: userInfo} = await RegisterUser(formData)
           if(userInfo.isSuccess){
-            toast.success("ثبت نام با موفقیت انجام شد")
-            console.log(userInfo.data)
-           // console.log(location.state.userinfo.key)
+            toast.success("ثبت نام انجام شد و اطلاعات ورود پیامک شد")
+            reset()
           }else{
             toast.error("ثبت نام انجام نشد")
           }
@@ -57,16 +61,8 @@ const Register = () => {
           errors={errors}
           icon={<AiOutlineUser className="size-6 text-primary-700" />}
         />
-        <TextField name="phone" type='tel' label="شماره موبایل یا ایمیل" register={register} required={true} errors={errors} ltr icon={<HiMiniDevicePhoneMobile className='size-6 text-primary-700'/>}/>
-         <TextField
-          name="password"
-          type="password"
-          label="کلمه عبور "
-          register={register}
-          required={true}
-          errors={errors}
-          showPassword={true}
-        />
+        <TextField name="phone" type='tel' label="شماره موبایل " register={register} required={true} errors={errors} ltr icon={<HiMiniDevicePhoneMobile className='size-6 text-primary-700'/>}/>
+        <TextField name="email" label=" ایمیل" register={register} required={true} errors={errors} ltr icon={<BiLogoGmail className='size-6 text-primary-700'/>}/>
           <Button type="submit" fullWidth size="lg" color="primary">
            ایجاد حساب کاربری
         </Button>

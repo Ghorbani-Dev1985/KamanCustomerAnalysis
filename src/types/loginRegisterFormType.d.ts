@@ -1,9 +1,9 @@
 
-interface UserPassType {
-  email: string;
+export interface UserPassType {
+  username: string;
   password: string;
 }
-export const RegisterType: UserPassType ={
+export interface RegisterType{
   first_name: string,
   last_name: string,
   phone: string,

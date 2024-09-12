@@ -38,10 +38,10 @@ const LoginRegister = () => {
               selectedKey={selected}
               onSelectionChange={setSelected}
             >
-              <Tab key="login" title="ورود با موبایل">
+              {/* <Tab key="login" title="ورود با موبایل">
                 <LoginWithPhone />
-              </Tab>
-              <Tab key="sign-up" title="ورود با ایمیل">
+              </Tab> */}
+              <Tab key="sign-up" title="ورود به حساب کاربری">
                 <LoginWithEmail />
               </Tab>
               <Tab key="register" title=" ایجاد حساب کاربری">

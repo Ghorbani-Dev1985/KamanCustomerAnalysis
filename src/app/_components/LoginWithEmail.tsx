@@ -9,26 +9,28 @@ import { LoginWithEmailFN } from "services/AuthServices";
 import TextField from "ui/TextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginWithEmailValidationSchema } from "@/constants/FormValidations";
+import { HiMiniDevicePhoneMobile } from "react-icons/hi2";
+import { StoreTokenInCookie } from "@/utils/StoreTokenInCookie";
 
 const LoginWithEmail = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<UserPassType>({ mode: "onChange" , resolver: yupResolver(LoginWithEmailValidationSchema)});
  
   const LoginWithEmailHandler: SubmitHandler<UserPassType> = async (data) => {
     let formData = new FormData();
-    formData.append("username", data.email);
+    formData.append("username", data.username);
     formData.append("password", data.password);
     try { 
       const {data: userInfo} =  await LoginWithEmailFN(formData)
       if(userInfo.isSuccess){
+       await StoreTokenInCookie(userInfo.access_token , userInfo.refresh_token)
         toast.success("ورود با موفقیت انجام شد")
         console.log(userInfo.data)
-       // console.log(location.state.userinfo.key)
       }else{
-        toast.error("نام کاربری یا کلمه عبور نادرست می باشد")
+        toast.error("اطلاعات وارد شده صحیح نمی باشد")
       }
     } catch (error) {
       toast.error("خطایی رخ داده است")
@@ -42,13 +44,13 @@ const LoginWithEmail = () => {
         onSubmit={handleSubmit(LoginWithEmailHandler)}
       >
         <TextField
-          name="email"
-          label=" ایمیل"
+          name="username"
+          label=" شماره موبایل یا ایمیل"
           register={register}
           required={true}
           errors={errors}
           ltr
-          icon={<BiLogoGmail className="size-6 text-primary-700" />}
+          icon={<HiMiniDevicePhoneMobile className="size-6 text-primary-700" />}
         />
         <TextField
           name="password"
