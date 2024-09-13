@@ -1,8 +1,9 @@
 "use client";
+import useClickOutside from "hooks/useClickOutside";
 import React, { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
-import useClickOutside from "src/hooks/useClickOutside";
+
 
 // types
 type DrawerProps = {
@@ -47,7 +48,7 @@ const Drawer = ({ children, drawerOpen, onClose }: DrawerProps) => {
          <button onClick={onClose} className="w-full flex justify-end">
          <HiXMark className="size-7 text-rose-500"/>
          </button>
-          <div>{children}</div>
+          <div className="flex flex-col items-center">{children}</div>
         </aside>
       </div>,
       document.body

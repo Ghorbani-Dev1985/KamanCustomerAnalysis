@@ -8,18 +8,18 @@ export const MenuItems = [
     id: 1,
     title: "نمای کلی",
     href: "/Overview",
-    icon: <MdLeaderboard />
+    icon: <MdLeaderboard className="size-5" />
   },
   {
     id: 2,
     title: " روند‌ها",
     href: "/Trends",
-    icon: <MdStackedLineChart />
+    icon: <MdStackedLineChart className="size-5" />
   },
   {
     id: 3,
     title: " تحلیل رفتار مشتریان",
-    icon: <HiOutlineUserGroup />,
+    icon: <HiOutlineUserGroup className="size-5" />,
     subMenu: [
       {
         id: 1,
@@ -61,7 +61,7 @@ export const MenuItems = [
   {
     id: 4,
     title: "تحلیل فروش محصولات",
-    icon: <FaLuggageCart />,
+    icon: <FaLuggageCart className="size-5" />,
     subMenu: [
       {
         id: 1,
@@ -78,7 +78,7 @@ export const MenuItems = [
   {
     id: 5,
     title: "تحلیل‌های پیش‌بینی‌ کننده ",
-    icon: <TbChartHistogram />,
+    icon: <TbChartHistogram className="size-5" />,
     subMenu: [
       {
         id: 1,
@@ -101,12 +101,12 @@ export const MenuItems = [
     id: 6,
     title: " مدیریت کاربران ",
     href: "/UserManagement",
-    icon: <FaUsersGear />
+    icon: <FaUsersGear className="size-5" />
   },
   {
     id: 7,
     title: " تنظیمات سامانه ",
-    icon: <MdOutlineSettings />,
+    icon: <MdOutlineSettings className="size-5" />,
     subMenu: [
       {
         id: 1,
