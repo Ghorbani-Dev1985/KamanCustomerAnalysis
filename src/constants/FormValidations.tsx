@@ -56,15 +56,10 @@ export const RegisterValidationSchema = yup.object().shape({
     .required("لطفا کلمه عبور را وارد نمایید"),
   });
 
-  export const SendOtpValidationSchema = yup.object().shape({
+  export const ForgotPassValidationSchema = yup.object().shape({
     phone: yup
     .string()
-  })
-
-  export const LoginWithPhoneValidationSchema = yup.object().shape({
-    phone: yup
-    .string()
-    .matches(/^09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$/ , "لطفا شماره موبایل را به درستی وارد نمایید")
+    .matches(/^9(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$/ , 'لطفا شماره موبایل(بدون صفر) یا ایمیل را به درستی وارد نمایید')
     .trim()
     .min(10, "نام باید حداقل 10 کاراکتر باشد")
     .max(11, " نام باید حداکثر 11 کاراکتر باشد")

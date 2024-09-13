@@ -42,7 +42,7 @@ const Register = () => {
   return (
     <div>
       <form
-        className="w-full space-y-4"
+        className="w-full space-y-4 my-3"
         onSubmit={handleSubmit(RegisterHandler)}
       >
          <TextField

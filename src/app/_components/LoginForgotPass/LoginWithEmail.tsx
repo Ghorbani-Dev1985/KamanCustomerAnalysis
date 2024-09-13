@@ -4,15 +4,16 @@ import { Button, Spacer } from "@nextui-org/react";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { BiLogoGmail } from "react-icons/bi";
 import { LoginWithEmailFN } from "services/AuthServices";
 import TextField from "ui/TextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginWithEmailValidationSchema } from "@/constants/FormValidations";
 import { HiMiniDevicePhoneMobile } from "react-icons/hi2";
 import { StoreTokenInCookie } from "@/utils/StoreTokenInCookie";
+import { useRouter } from "next/navigation";
 
-const LoginWithEmail = () => {
+const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -28,6 +29,7 @@ const LoginWithEmail = () => {
       if(userInfo.isSuccess){
        await StoreTokenInCookie(userInfo.access_token , userInfo.refresh_token)
         toast.success("ورود با موفقیت انجام شد")
+        router.push("/")
         console.log(userInfo.data)
       }else{
         toast.error("اطلاعات وارد شده صحیح نمی باشد")
@@ -40,7 +42,7 @@ const LoginWithEmail = () => {
   return (
     <>
       <form
-        className="w-full space-y-4"
+        className="w-full space-y-4 my-3"
         onSubmit={handleSubmit(LoginWithEmailHandler)}
       >
         <TextField
@@ -61,12 +63,12 @@ const LoginWithEmail = () => {
           errors={errors}
           showPassword={true}
         />
-        <Spacer y={6}/>
+        <Spacer y={2.5}/>
         <Button type="submit" fullWidth size="lg" color="primary">
           ورود به حساب کاربری
         </Button>
       </form>
-      <div className="flex my-3 text-zinc-500 font-normal">
+      <div onClick={() => setStep(2)} className="flex cursor-pointer my-3 text-zinc-500 hover:text-primary font-normal transition-colors">
         <p> رمز عبور خود را فراموش کرده اید؟ </p>
       </div>
     </>

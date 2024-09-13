@@ -9,3 +9,6 @@ export interface RegisterType{
   phone: string,
   email: string,
 }
+export interface PhoneType{
+  phone: string,
+}

@@ -10,9 +10,8 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import { Key } from '@react-types/shared';
-import LoginWithEmail from "./LoginWithEmail";
-import LoginWithPhone from "./LoginWithPhone/LoginWithPhone";
 import Register from "./Register";
+import LoginForgotPass from "./LoginForgotPass/LoginForgotPass";
 
 const LoginRegister = () => {
   const [selected, setSelected] = useState<Key>("login");
@@ -38,11 +37,8 @@ const LoginRegister = () => {
               selectedKey={selected}
               onSelectionChange={setSelected}
             >
-              {/* <Tab key="login" title="ورود با موبایل">
-                <LoginWithPhone />
-              </Tab> */}
-              <Tab key="sign-up" title="ورود به حساب کاربری">
-                <LoginWithEmail />
+              <Tab key="login" title="ورود به حساب کاربری">
+                <LoginForgotPass />
               </Tab>
               <Tab key="register" title=" ایجاد حساب کاربری">
                 <Register />
