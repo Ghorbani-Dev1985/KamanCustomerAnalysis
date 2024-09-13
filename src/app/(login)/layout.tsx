@@ -1,11 +1,11 @@
-import "../../public/styles/globals.css";
+import "../../../public/styles/globals.css";
 import { IRANSansWebFont } from "@/utils/font";
 import { NextUIProvider } from "@nextui-org/react";
 import { Toaster } from "react-hot-toast";
 import { ReactNode } from "react";
 import { Metadata } from "next";
-import ReactQueryProvider from "./Providers";
 import NextTopLoader from "nextjs-toploader";
+import ReactQueryProvider from "../Providers";
 
 export const metadata: Metadata = {
   title: {
@@ -33,12 +33,10 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
               easing="ease"
               speed={200}
             />
-            <Toaster />
-          
-            <main className="">
+            <Toaster />    
+            <main>
               {children}
             </main>
-       
           </NextUIProvider>
         </ReactQueryProvider>
       </body>

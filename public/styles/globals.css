@@ -16,7 +16,7 @@
   @apply leading-8
   }
   body {
-    @apply bg-primary-50 font-IRANSansWeb font-bold text-base overflow-x-hidden scroll-smooth;
+    @apply font-IRANSansWeb font-bold text-base overflow-x-hidden scroll-smooth;
   }
 }
 

@@ -18,6 +18,10 @@ const config : Config = {
                 md: '0.625rem',
               }
       },
+      gridTemplateColumns: {
+        // 24 column grid
+        '24': 'repeat(24, minmax(0, 1fr))',
+      },
       colors:{
         primary: {
           50: "#f0f7fe",
@@ -84,7 +88,6 @@ const config : Config = {
           'xl': '1280px',
         },
         colors:{
-          background: "#f0f7fe",
           foreground: "#284680",
           primary: {
             50: "#f0f7fe",
