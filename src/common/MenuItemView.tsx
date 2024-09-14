@@ -1,11 +1,14 @@
+'use client'
 import { MenuItems } from '@/constants/MenuItems';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react'
 import { BiCaretLeft } from 'react-icons/bi';
 import { HiChevronDown } from 'react-icons/hi2';
 
 function MenuItemView() {
+  const pathName = usePathname();
   return (
     <>
         <Image
@@ -22,7 +25,7 @@ function MenuItemView() {
             <React.Fragment key={id}>
               {subMenu ? (
                 <div
-                  className="group flex flex-col rounded-lg bg-primary-50/60 px-1.5 py-3 shadow"
+                  className="group flex flex-col rounded-lg px-1.5 py-3"
                   tabIndex={id}
                 >
                   <div className="flex cursor-pointer items-center justify-between">
@@ -35,13 +38,14 @@ function MenuItemView() {
                   <div className="invisible h-auto max-h-0 items-center opacity-0 transition-all group-focus:visible group-focus:max-h-screen group-focus:opacity-100 group-focus:duration-1000">
                     <ul>
                       {subMenu.map(({ id, title, href }) => {
+                        const isActive = (pathName === href);
                         return (
                           <li key={id}>
                             <Link
                               href={href}
-                              className="flex items-center text-xs md:text-base hover:text-primary-800 px-1.5 py-3 gap-x-1 transition-colors"
+                              className={`${isActive && "bg-primary-50/60"} flex items-center text-xs md:text-base hover:text-secondary px-1.5 py-3 gap-x-1 transition-colors`}
                             >
-                              <BiCaretLeft className="size-5 text-amber-500" />
+                              <BiCaretLeft className="size-5 text-amber-500 transition-colors" />
                               {title}
                             </Link>
                           </li>
@@ -54,7 +58,7 @@ function MenuItemView() {
                 <>
                   <Link
                     href={href}
-                    className="flex items-center rounded-lg text-sm md:text-base bg-primary-50/60 hover:text-primary-800 shadow px-1.5 py-3 gap-x-1 transition-colors"
+                    className={`${pathName === href && "bg-primary-50/60"} flex items-center rounded-lg text-sm md:text-base  hover:text-secondary px-1.5 py-3 gap-x-1 transition-colors`}
                   >
                     {icon}
                     <span>{title}</span>

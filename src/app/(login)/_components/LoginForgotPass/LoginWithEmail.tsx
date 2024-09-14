@@ -29,7 +29,7 @@ const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
       if(userInfo.isSuccess){
        await StoreTokenInCookie(userInfo.access_token , userInfo.refresh_token)
         toast.success("ورود با موفقیت انجام شد")
-        router.push("/")
+        router.replace("/Overview")
         console.log(userInfo.data)
       }else{
         toast.error("اطلاعات وارد شده صحیح نمی باشد")

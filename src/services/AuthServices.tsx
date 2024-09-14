@@ -9,6 +9,9 @@ import Http from "./HttpServices";
 // export function CheckOtp(data){
 //     return Http.post("/check-otp" , data).then(({data}) => data.data)
 // }
+export function GetUser(){
+    return Http.get("/user_info/").then(({data}) => data.data)
+}
 export function RegisterUser(data: object){
     return Http.post("/add_user/" , data).then(({data}) => data.data)
 }

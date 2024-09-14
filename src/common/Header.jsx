@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import Drawer from './Drawer'
 import MenuItemView from './MenuItemView'
+import { useGetUser } from 'hooks/useAuth'
 
 
 function Header() {
@@ -16,6 +17,7 @@ function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const CompleteDate = TodayLocaleDate().split(',')
   const SplitDate = CompleteDate[0].split(' ')
+  const {data: userInfo} = useGetUser()
   const UserLogoutHandler = async () => {
     try {
       const {data} = await LogoutUser();
@@ -44,7 +46,7 @@ function Header() {
          <MenuItemView />
         </Drawer>
              </div>
-            <h6 className='font-bold text-sm sm:text-2xl text-primary-950'>محمد قربانی عزیز؛ خوش آمدید</h6>
+            <h6 className='font-bold text-sm sm:text-2xl text-primary-950'> عزیز؛ خوش آمدید{userInfo?.first_name} {userInfo?.last_name}</h6>
             <Divider orientation='vertical' className='h-6 bg-gray-400'/>
            <p className='flex-center gap-x-1 text-gray-500 font-normal text-xs sm:text-base text-left'><span>{CompleteDate[1]},</span><span>{SplitDate[2]}</span><span>{SplitDate[1]}</span><span>{SplitDate[0]}</span></p>
           </div>
