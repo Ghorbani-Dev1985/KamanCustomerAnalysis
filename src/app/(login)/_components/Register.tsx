@@ -10,6 +10,7 @@ import TextField from 'ui/TextField';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterValidationSchema } from '@/constants/FormValidations';
 import { RegisterType } from '@/types/loginRegisterFormType';
+import { useMutation } from '@tanstack/react-query';
 
 const Register = () => {
     const {
@@ -18,7 +19,7 @@ const Register = () => {
        reset,
         formState: { errors },
       } = useForm<RegisterType>({ mode: "onChange" , resolver: yupResolver(RegisterValidationSchema)});
-     
+      const {mutateAsync: mutateRegisterUser} = useMutation({mutationFn : RegisterUser})
       const RegisterHandler: SubmitHandler<RegisterType> = async (data) => {
         let formData = new FormData();
         formData.append("username", data.phone);
@@ -27,7 +28,7 @@ const Register = () => {
         formData.append("phone", data.phone);
         formData.append("email", data.email);
         try { 
-          const {data: userInfo} = await RegisterUser(formData)
+          const userInfo = await mutateRegisterUser(formData)
           if(userInfo.isSuccess){
             toast.success("ثبت نام انجام شد و اطلاعات ورود پیامک شد")
             reset()

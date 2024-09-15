@@ -9,6 +9,7 @@ import { HiMiniDevicePhoneMobile } from 'react-icons/hi2';
 import { Button, Spacer } from '@nextui-org/react';
 import toast from 'react-hot-toast';
 import { BiChevronRight } from 'react-icons/bi';
+import { useMutation } from '@tanstack/react-query';
 const ForgotPass = ({setStep} : {setStep: (step: number) => void}) => {
     const {
         register,
@@ -16,12 +17,13 @@ const ForgotPass = ({setStep} : {setStep: (step: number) => void}) => {
        reset,
         formState: { errors },
       } = useForm<PhoneType>({ mode: "onChange" , resolver: yupResolver(ForgotPassValidationSchema)});
+      const {mutateAsync: mutateChangePassword} = useMutation({mutationFn : ChangePassword})
     const ChangePasswordHandler = async (data: PhoneType) => {
         let formData = new FormData();
         formData.append("phone", data.phone);
         try {
-          const {data} = await ChangePassword(formData);
-          if(data.isSuccess){
+          const result = await mutateChangePassword(formData);
+          if(result.isSuccess){
               toast.success("رمز عبور جدید برای شما پیامک شد")
               setStep(1);
               reset();

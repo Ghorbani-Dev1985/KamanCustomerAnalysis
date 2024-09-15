@@ -11,6 +11,7 @@ import { LoginWithEmailValidationSchema } from "@/constants/FormValidations";
 import { HiMiniDevicePhoneMobile } from "react-icons/hi2";
 import { StoreTokenInCookie } from "@/utils/StoreTokenInCookie";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
   const router = useRouter();
@@ -19,18 +20,18 @@ const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
     handleSubmit,
     formState: { errors },
   } = useForm<UserPassType>({ mode: "onChange" , resolver: yupResolver(LoginWithEmailValidationSchema)});
- 
+  const {mutateAsync: mutateLogin} = useMutation({mutationFn : LoginWithEmailFN})
   const LoginWithEmailHandler: SubmitHandler<UserPassType> = async (data) => {
     let formData = new FormData();
     formData.append("username", data.username);
     formData.append("password", data.password);
     try { 
-      const {data: userInfo} =  await LoginWithEmailFN(formData)
+      const userInfo =  await mutateLogin(formData)
+      console.log(userInfo)
       if(userInfo.isSuccess){
        await StoreTokenInCookie(userInfo.access_token , userInfo.refresh_token)
-        toast.success("ورود با موفقیت انجام شد")
-        router.replace("/Overview")
-        console.log(userInfo.data)
+       router.replace("/Overview")
+       toast.success("ورود با موفقیت انجام شد")
       }else{
         toast.error("اطلاعات وارد شده صحیح نمی باشد")
       }
@@ -38,7 +39,7 @@ const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
       toast.error("خطایی رخ داده است")
       console.log(error)
     }   
-  };
+  }
   return (
     <>
       <form
