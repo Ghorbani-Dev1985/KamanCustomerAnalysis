@@ -49,13 +49,19 @@ const config : Config = {
       backgroundImage: {
         'loginBg' : 'url("/images/bg/loginBG.jpg")',
     },
+       boxShadow : {
+        fullLight: 'box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px',
+        fullDark: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
+       }
     },
     screens: {
       'xs': '480px',
       'sm': '640px',
       'md': '768px',
       'lg': '1024px',
-      'xl': '1280px',
+      'xl':  '1280px',
+      '2xl': '1440px',
+      '3xl': '1920px',
     },
     variants: {
       scrollbar: ["light"],
@@ -85,7 +91,9 @@ const config : Config = {
           'sm': '640px',
           'md': '768px',
           'lg': '1024px',
-          'xl': '1280px',
+          'xl':  '1280px',
+          '2xl': '1440px',
+          '3xl': '1920px',
         },
         colors:{
           foreground: "#284680",

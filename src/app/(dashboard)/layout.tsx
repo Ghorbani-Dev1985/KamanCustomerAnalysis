@@ -40,7 +40,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
               <SideBar />
               <div className="col-span-1 lg:col-[span_19_/_span_19] xl:col-[span_20_/_span_20] h-[calc(100%-102px)]">
                <Header />
-               <section className="w-full h-full bg-slate-50 rounded-tr-3xl xl:px-9 pt-10 pb-14">
+               <section className="w-full h-full bg-slate-50 rounded-tr-3xl xl:px-3 pt-6 pb-14">
                 <div className="container">
               {children}
                 </div>
