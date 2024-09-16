@@ -29,9 +29,9 @@ const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
       const userInfo =  await mutateLogin(formData)
       console.log(userInfo)
       if(userInfo.isSuccess){
-       await StoreTokenInCookie(userInfo.access_token , userInfo.refresh_token)
-       router.replace("/Overview")
-       toast.success("ورود با موفقیت انجام شد")
+      router.replace("/Overview")
+      toast.success("ورود با موفقیت انجام شد")
+      await StoreTokenInCookie(userInfo.access_token , userInfo.refresh_token)
       }else{
         toast.error("اطلاعات وارد شده صحیح نمی باشد")
       }
