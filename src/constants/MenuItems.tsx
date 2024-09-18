@@ -7,13 +7,13 @@ export const MenuItems = [
   {
     id: 1,
     title: "نمای کلی",
-    href: "/Overview",
+    href: "/Dashboard/Overview",
     icon: <MdLeaderboard className="size-5" />
   },
   {
     id: 2,
     title: " روند‌ها",
-    href: "/Trends",
+    href: "/Dashboard/Trends",
     icon: <MdStackedLineChart className="size-5" />
   },
   {
@@ -24,37 +24,37 @@ export const MenuItems = [
       {
         id: 1,
         title: " بخش بندی مشتریان ",
-        href: "/CustomerSegmentation",
+        href: "/Dashboard/CustomerSegmentation",
       },
       {
         id: 2,
         title: "جابجایی مشتریان ",
-        href: "/MovingCustomers",
+        href: "/Dashboard/MovingCustomers",
       },
       {
         id: 3,
         title: "نرخ بازگشت مشتریان ",
-        href: "/CustomerReturnRate",
+        href: "/Dashboard/CustomerReturnRate",
       },
       {
         id: 4,
         title: " ارزش طول عمر مشتریان",
-        href: "/CustomerLifetimeValue",
+        href: "/Dashboard/CustomerLifetimeValue",
       },
       {
         id: 5,
         title: " سهم سبد مشتریان",
-        href: "/ShareCustomersShoppingCart",
+        href: "/Dashboard/ShareCustomersShoppingCart",
       },
       {
         id: 6,
         title: " خوشه بندی خرید مشتریان",
-        href: "/CustomerPurchaseClustering",
+        href: "/Dashboard/CustomerPurchaseClustering",
       },
       {
         id: 7,
         title: " گروه مشتریان",
-        href: "/CustomerGroup"
+        href: "/Dashboard/CustomerGroup"
       }
     ]
   },
@@ -66,12 +66,12 @@ export const MenuItems = [
       {
         id: 1,
         title: " تحلیل عملکرد محصولات",
-        href: "/ProductPerformanceAnalysis",
+        href: "/Dashboard/ProductPerformanceAnalysis",
       },
       {
         id: 2,
         title: " تحلیل سبد مشتریان",
-        href: "/AnalysisCustomersShoppingCarts",
+        href: "/Dashboard/AnalysisCustomersShoppingCarts",
       },
     ]
   },
@@ -83,24 +83,24 @@ export const MenuItems = [
       {
         id: 1,
         title: " پیش بینی ریزش مشتری",
-        href: "/PredictingCustomerChurn",
+        href: "/Dashboard/PredictingCustomerChurn",
       },
       {
         id: 2,
         title: " تحلیل فاصله بین هر خرید",
-        href: "/AnalyzeDistanceBetweenPurchase",
+        href: "/Dashboard/AnalyzeDistanceBetweenPurchase",
       },
       {
         id: 3,
         title: " دسته کردن محصولات",
-        href: "/ProductGrouping",
+        href: "/Dashboard/ProductGrouping",
       },
     ]
   },
   {
     id: 6,
     title: " مدیریت کاربران ",
-    href: "/UserManagement",
+    href: "/Dashboard/UserManagement",
     icon: <FaUsersGear className="size-5" />
   },
   {
@@ -111,22 +111,22 @@ export const MenuItems = [
       {
         id: 1,
         title: "  تحلیل داده",
-        href: "/DataAnalysis",
+        href: "/Dashboard/DataAnalysis",
       },
       {
         id: 2,
         title: "ورود داده",
-        href: "/DataEntry",
+        href: "/Dashboard/DataEntry",
       },
       {
         id: 3,
         title: "سامانه پیامک",
-        href: "/SmsSystem",
+        href: "/Dashboard/SmsSystem",
       },
       {
           id: 4,
           title: " وب سرویس",
-          href: "/WebService",
+          href: "/Dashboard/WebService",
       }
     ]
   }

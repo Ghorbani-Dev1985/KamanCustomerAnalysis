@@ -27,17 +27,17 @@ const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
     formData.append("password", data.password);
     try { 
       const userInfo =  await mutateLogin(formData)
-      console.log(userInfo)
       if(userInfo.isSuccess){
-      router.replace("/Overview")
+      router.replace("/Dashboard/Overview")
       toast.success("ورود با موفقیت انجام شد")
       await StoreTokenInCookie(userInfo.access_token , userInfo.refresh_token)
-      }else{
-        toast.error("اطلاعات وارد شده صحیح نمی باشد")
       }
-    } catch (error) {
-      toast.error("خطایی رخ داده است")
-      console.log(error)
+    }catch (error: any) {
+      if(error.status === 401){
+        toast.error("اطلاعات وارد شده صحیح نمی باشد")
+      }else{
+        toast.error("خطایی رخ داده است")
+      }
     }   
   }
   return (

@@ -20,8 +20,7 @@ function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const CompleteDate = TodayLocaleDate().split(",");
   const SplitDate = CompleteDate[0].split(" ");
-  // console.log(useGetUser())
-
+  const {data: userInfo} = useGetUser();
   const { mutateAsync: mutateLogoutUser } = useMutation({
     mutationFn: LogoutUser,
   });
@@ -29,12 +28,11 @@ function Header() {
     const token = await GetAccessTokenFromCookie()
     try {
       const result = await mutateLogoutUser(token)
-      console.log(result)
       if(result.isSuccess){
           toast.success("خروج از حساب کاربری با موفقیت انجام شد")
           setIsModalOpen(false);
           router.replace('/')
-          await DeleteCookies()
+          await DeleteCookies();
       }else{
         toast.error("خروج از حساب انجام نشد")
       }
@@ -61,8 +59,11 @@ function Header() {
               <MenuItemView />
             </Drawer>
           </div>
-          {/* <h6 className='font-bold text-sm sm:text-2xl text-primary-950'> عزیز؛ خوش آمدید{userInfo?.first_name} {userInfo?.last_name}</h6>
-            <Divider orientation='vertical' className='h-6 bg-gray-400'/> */}
+          {
+            userInfo &&
+          <h6 className='font-bold text-sm sm:text-2xl text-primary-950'>{userInfo?.results.first_name} {userInfo?.results.last_name} عزیز؛ خوش آمدید</h6>
+          }
+            <Divider orientation='vertical' className='h-6 bg-gray-400'/>
           <p className="flex-center gap-x-1 text-gray-500 font-normal text-xs sm:text-base text-left">
             <span>{CompleteDate[1]},</span>
             <span>{SplitDate[2]}</span>

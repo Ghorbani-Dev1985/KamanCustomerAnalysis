@@ -1,8 +1,10 @@
+import { GetAccessTokenFromCookie } from "@/utils/GetAccessTokenFromCookie";
 import Http from "./HttpServices";
-export function GetUser(data : string | undefined){
+export async function GetUser(){
+    const token = await GetAccessTokenFromCookie()
     return Http.get("/user_info/" , {
         headers : {
-            Authorization : `Bearer ${data}`
+            Authorization : `Bearer ${token}`
         }}).then(({data}) => data)
 }
 export function RegisterUser(data: object){
@@ -17,7 +19,6 @@ export function ChangePassword(data: object){
 export function LogoutUser(data : string | undefined){
     return Http.get("/user_logout/" , {
         headers : {
-            Accept : 'text/plain',
             Authorization : `Bearer ${data}`
         }}).then(({data}) => data)
 }
