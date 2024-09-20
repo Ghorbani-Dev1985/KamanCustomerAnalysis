@@ -20,14 +20,17 @@ const LoginRegister = () => {
       <div className="container flex-center">
         <Card className="w-full md:max-w-lg">
           <CardHeader className="flex-center">
-            <Image
-              width={224}
-              height={300}
-              alt="کمان"
-              placeholder="blur"
-              blurDataURL={`/images/logo/logo.png`}
-              src={`/images/logo/logo.png`}
-            />
+            <div className="min-h-36">
+          <Image
+        width={250}
+        height={115}
+        alt="کمان"
+        className="my-4"
+        placeholder="blur"
+        blurDataURL="/images/logo/logo.png"
+        src="/images/logo/logo.png"
+      />
+            </div>
           </CardHeader>
           <CardBody className="overflow-hidden ">
             <Tabs

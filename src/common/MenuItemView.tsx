@@ -11,14 +11,17 @@ function MenuItemView() {
   const pathName = usePathname();
   return (
     <>
-        <Image
-        width={224}
-        height={300}
+         <div className="min-h-36">
+          <Image
+        width={190}
+        height={100}
         alt="کمان"
+        className="my-4"
         placeholder="blur"
-        blurDataURL={`/images/logo/logo.png`}
-        src={`/images/logo/logo.png`}
+        blurDataURL="/images/logo/logo.png"
+        src="/images/logo/logo.png"
       />
+        </div>
       <div className="w-full space-y-3 px-2">
         {MenuItems.map(({ id, title, href, icon, subMenu }) => {
           return (
