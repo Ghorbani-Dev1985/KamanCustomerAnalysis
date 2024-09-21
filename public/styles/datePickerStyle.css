@@ -1,0 +1,38 @@
+.rmdp-week-day {
+    color: #71717a !important;
+}
+.rmdp-range {
+    background-color: #6eafecb6 !important;
+    border-radius: 5px;
+    color: #52525b !important;
+}
+.rmdp-day.rmdp-today span{
+    background-color: #2c51a3 !important;
+}
+.kamanCalender .rmdp-range {
+    background-color: #fde68a !important;
+    color: #52525b !important;
+}
+.rmdp-range-hover {
+    background-color: #2c52a3c6 !important;
+}
+.kamanCalender .rmdp-range-hover {
+    background-color: #fde68aa0 !important;
+    color: #52525b !important;
+}
+.kamanCalender .rmdp-day.rmdp-today span{
+    background-color: #fbbf24 !important;
+    color: #52525b !important;
+}
+@media (hover :hover){
+   .rmdp-day:not(.rmdp-disabled,.rmdp-day-hidden) span:hover{
+        background-color: #deecfb !important;
+        color: #52525b !important;
+    }
+}
+@media (hover :hover){
+    .kamanCalender .rmdp-day:not(.rmdp-disabled,.rmdp-day-hidden) span:hover{
+        background-color: #fef3c7 !important;
+        color: #52525b !important;
+    }
+}

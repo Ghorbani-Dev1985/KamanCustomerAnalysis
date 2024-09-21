@@ -1,4 +1,4 @@
-import DatesSubHeader from '@/common/DatesSubHeader'
+import DatesSubHeader from '@/common/SelectDatesHeader/DatesSubHeader'
 import React from 'react'
 
 const Overview = () => {

@@ -11,10 +11,12 @@ type DatesContextType<T> = {
   setStartCompareUserDate: Dispatch<React.SetStateAction<T>>;
   endCompareUserDate: T;
   setEndCompareUserDate: Dispatch<React.SetStateAction<T>>;
-  desiredTimePeriod: T;
-  setDesiredTimePeriod: Dispatch<React.SetStateAction<T>>;
-  compareTimePeriod: T;
-  setCompareTimePeriod: Dispatch<React.SetStateAction<T>>;
+  desiredDatePeriod: T;
+  setDesiredDatePeriod: Dispatch<React.SetStateAction<T>>;
+  compareDatePeriod: T;
+  setCompareDatePeriod: Dispatch<React.SetStateAction<T>>;
+  SplitDesiredDatePeriod: T;
+  SplitCompareDatePeriod: T;
 };
 const DatesContext = createContext<DatesContextType<any>>(undefined as any);
 
@@ -31,14 +33,16 @@ export const DatesProvider = ({ children }: { children: ReactNode }) => {
   const [endCompareUserDate, setEndCompareUserDate] = useState(
     new DateObject({ calendar: persian }).toString()
   );
-  const [desiredTimePeriod, setDesiredTimePeriod] = useState([
+  const [desiredDatePeriod, setDesiredDatePeriod] = useState([
     new DateObject({ calendar: persian }).toFirstOfWeek(),
     new DateObject({ calendar: persian }).toLastOfWeek(),
   ]);
-  const [compareTimePeriod, setCompareTimePeriod] = useState([
+  const [compareDatePeriod, setCompareDatePeriod] = useState([
     new DateObject({ calendar: persian }),
     new DateObject({ calendar: persian }),
   ]);
+  const SplitDesiredDatePeriod = desiredDatePeriod.toString().split(",");
+  const SplitCompareDatePeriod = compareDatePeriod.toString().split(",");
   return (
     <DatesContext.Provider
       value={{
@@ -50,10 +54,12 @@ export const DatesProvider = ({ children }: { children: ReactNode }) => {
         setStartCompareUserDate,
         endCompareUserDate,
         setEndCompareUserDate,
-        desiredTimePeriod,
-        setDesiredTimePeriod,
-        compareTimePeriod,
-        setCompareTimePeriod,
+        desiredDatePeriod,
+        setDesiredDatePeriod,
+        compareDatePeriod,
+        setCompareDatePeriod,
+        SplitDesiredDatePeriod,
+        SplitCompareDatePeriod,
       }}
     >
       {children}
