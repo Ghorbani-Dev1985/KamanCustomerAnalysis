@@ -10,6 +10,10 @@ import SelectDesiredDates from "./SelectDesiredDates";
 import { useDates } from "@/context/DatesContext";
 import SelectCompareDates from "./SelectCompareDates";
 import '../../../public/styles/datePickerStyle.css'
+import { useGetFactorInfo, useGetProductInfo } from "hooks/useGetInfo";
+import ChangeDateToIso from "@/utils/ChangeDateToIso";
+import toast from "react-hot-toast";
+
 
 const DatesSubHeader = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -18,16 +22,38 @@ const DatesSubHeader = () => {
   const [isCompare, setIsCompare] = useState(false);
   const {startUserDate} = useDates()
   const {endUserDate} = useDates()
-  const {startCompareUserDate} = useDates()
-  const {endCompareUserDate} = useDates()
   const {desiredDatePeriod} = useDates()
   const {setDesiredDatePeriod} = useDates()
+  const {startCompareUserDate} = useDates()
+  const {endCompareUserDate} = useDates()
   const {compareDatePeriod} = useDates()
   const {setCompareDatePeriod} = useDates()
   const {SplitDesiredDatePeriod} = useDates()
   const {SplitCompareDatePeriod} = useDates()
+  let GetInfoFormData = new FormData()
+  const {isPending : isPendingGetFactorInfo , mutateAsync : GetFactorInfo} = useGetFactorInfo()
+  const {isPending : isPendingGetProductInfo , mutateAsync : GetProductInfo} = useGetProductInfo()
+  const HandleGetInfo = async () => {
+    GetInfoFormData.append("start_date1", isEnterUserDate ? ChangeDateToIso(startUserDate) : ChangeDateToIso(SplitDesiredDatePeriod[0]))
+    GetInfoFormData.append("end_date2", isEnterUserDate ? ChangeDateToIso(endUserDate) : ChangeDateToIso(SplitDesiredDatePeriod[1]))
+    if(isCompare){
+      GetInfoFormData.append("start_date2", isEnterUserDate ? ChangeDateToIso(startCompareUserDate) : ChangeDateToIso(SplitCompareDatePeriod[0]))
+      GetInfoFormData.append("end_date2", isEnterUserDate ? ChangeDateToIso(endCompareUserDate) : ChangeDateToIso(SplitCompareDatePeriod[1]))
+    }
+    try {
+     // const FactorInfo = await GetFactorInfo(GetInfoFormData)
+      const ProductInfo = await GetProductInfo(GetInfoFormData)
+      console.log( ProductInfo)
+      setShowDatePicker(false)
+    } catch (error) {
+       console.log(error)
+       toast.error("خطا در دریافت اطلاعات")
+    }
+   
+     
+  }
   return (
-    <section className="relative w-full flex-between bg-white h-20 mb-3 rounded-lg shadow-fullLight">
+    <section className="relative w-full flex-between bg-white h-20 mb-3 rounded-lg shadow-sm">
       <div className="flex-center h-full">
         {/* Trigger Btn */}
         <Button
@@ -129,7 +155,7 @@ const DatesSubHeader = () => {
               <Button
                 color="primary"
                 variant="solid"
-                onPress={() => setShowDatePicker(true)}
+                onPress={HandleGetInfo}
               >
                 اعمال
               </Button>
