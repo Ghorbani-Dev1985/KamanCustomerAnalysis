@@ -42,7 +42,9 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
                <Header />
                <section className="w-full h-full bg-slate-50 rounded-tr-3xl xl:px-3 pt-6 pb-14">
                 <div className="container">
+                  <div className="flex flex-col">
               {children}
+                  </div>
                 </div>
                </section>
               </div>

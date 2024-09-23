@@ -4,10 +4,10 @@ import ShowSummeryInfos from './_components/ShowSummeryInfos'
 
 const Overview = () => {
   return (
-    <section className='flex flex-col'>
+    <>
        <DatesSubHeader />
        <ShowSummeryInfos />
-    </section>
+    </>
   )
 }
 
