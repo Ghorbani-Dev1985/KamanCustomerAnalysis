@@ -1,5 +1,4 @@
 "use client";
-import useClickOutside from "hooks/useClickOutside";
 import React, { useEffect, useRef, useState } from "react";
 import { HiChevronDown } from "react-icons/hi2";
 
@@ -31,7 +30,6 @@ const KamanAccordion = ({
   const [contentSize, setContentSize] = useState<number>(0);
   // content ref
   const contentRef = useRef<null | HTMLDivElement>(null);
-  const AccordionBody = useClickOutside(() => setOpen(false));
   // reset contentSize state according to the size of the element
   useEffect(() => {
     if (open) {
@@ -43,7 +41,6 @@ const KamanAccordion = ({
   return (
     <>
       <div
-      ref={AccordionBody}
         onClick={() => setOpen((prev) => !prev)}
         className={`${open ? "rounded-tr-lg rounded-tl-lg bg-primary-50/60 border-b border-primary-200" : "rounded-lg"} flex cursor-pointer items-center justify-between px-1 py-2 mt-4 ${containerClasses}`}
       >

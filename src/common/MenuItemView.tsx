@@ -29,7 +29,7 @@ function MenuItemView() {
           return (
             <React.Fragment key={id}>
               {subMenu ? (
-              <KamanAccordion icon={icon} title={title} containerClasses='' contentClasses='bg-primary-50/60 rounded-br-lg rounded-bl-lg'>
+              <KamanAccordion icon={icon} title={title} contentClasses='bg-primary-50/60 rounded-br-lg rounded-bl-lg'>
                 {subMenu.map(({ id, title, href }) => {
      const isActiveRoute = pathName === href
       return (
