@@ -1,13 +1,9 @@
 import React from 'react'
-import UploadFile from './_components/UploadFile'
+import DateEntryView from './_components/DataEntryView'
 
 const DataEntry = () => {
 
-  return (
-    <>
-    <UploadFile />
-    </>
-  )
+  return <DateEntryView />
 }
 
 export default DataEntry
