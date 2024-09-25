@@ -6,7 +6,6 @@ import { MdDownload } from 'react-icons/md'
 import { GetSampleFile } from "services/DataEntryServices";
 const SampleFile = () => {
     const {mutateAsync: mutateGetSampleFile} = useMutation({mutationFn : GetSampleFile })
-
     const GetSampleFileHandler = async() => {
         try {
          const sampleFile = await mutateGetSampleFile()

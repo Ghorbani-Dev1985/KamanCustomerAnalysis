@@ -47,14 +47,14 @@ function UploadFile({
   };
   return (
     <>
-      <div className={`${isUploadFile ? "flex-center" : "hidden"}  w-full`}>
+      <div className={`${isUploadFile ? "flex-center" : "hidden"} w-full`}>
         <label
           htmlFor="kamanUploadFile"
           className="flex-center flex-col w-full relative h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
         >
-          <div className="flex-center flex-col pt-5 pb-6">
+          <div className="flex flex-col items-center pt-5 pb-6">
             <MdOutlineCloudUpload className="size-8 mb-4 text-gray-500" />
-            <p className="mb-2 text-sm text-gray-500">
+            <p className="mb-2 text-sm text-gray-500 px-1">
               <span className="font-semibold">برای آپلود کلیک نمایید</span>
               یا فایل را بکشید و اینجا رها نمایید
             </p>

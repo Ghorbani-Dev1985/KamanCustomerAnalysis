@@ -7,12 +7,14 @@ import { SiTicktick } from 'react-icons/si'
 import SampleFile from './SampleFile'
 import { MdOutlineCloudUpload } from 'react-icons/md'
 import UploadFile from './UploadFile'
+import UploadedFileTable from './UploadedFileTable'
+import DeleteAllFiles from './DeleteAllFiles'
 
 const DateEntryView = () => {
     const [isUploadFile, setIsUploadFile] = useState(false);
   return (
     <>
-      <div className="w-full bg-white/50 flex-between px-5 py-6 rounded-tr-lg rounded-tl-lg border-b border-gray-100">
+      <div className="w-full bg-white/50 flex flex-col items-center gap-y-5 md:flex-row md:flex-between px-5 py-6 rounded-tr-lg rounded-tl-lg border-b border-gray-100">
         <p>مدیریت داده‌های کسب و کار</p>
         <Chip
           variant="flat"
@@ -25,15 +27,15 @@ const DateEntryView = () => {
       </div>
       <div className="bg-white px-5 py-8 shadow-sm rounded-br-lg rounded-bl-lg">
         <Fieldset title="ورود داده">
-          <p>
+           <p className='text-justify'>
             در این بخش می توانید داده‌های خود را در قالب یک فایل xlsx , xls ,
             csv و یا در یک فایل فشرده zip آپلود کنید قالب نمونه را دانلود کنید و
             داده‌های خود را مطابق با قالب نمونه آماده کرده و سپس آپلود نمایید.
           </p>
-          <div className="flex-between my-8">
+         <div className="flex flex-col items-center lg:flex-row lg:flex-between my-8">
             <Chip
               variant="flat"
-              className="bg-orange-100 text-orange-700 px-3 py-6"
+              className="bg-orange-100 whitespace-pre-wrap h-auto leading-6 mb-3 lg:mb-0 text-orange-700 px-1 md:px-3 py-1.5 md:py-3"
               radius="lg"
               startContent={
                 <IoWarningOutline className="size-5 text-orange-500" />
@@ -41,7 +43,7 @@ const DateEntryView = () => {
             >
               داده‌های فایل جدید، در محاسبات بعدی تحلیل‌ها اعمال خواهد شد.
             </Chip>
-            <div className="flex-center gap-x-2">
+            <div className="flex flex-col md:flex-row md:flex-center gap-2.5">
               <SampleFile />
               <Button
                 color="primary"
@@ -55,7 +57,9 @@ const DateEntryView = () => {
           </div>
           <UploadFile setIsUploadFile={setIsUploadFile} isUploadFile={isUploadFile} />
           <Divider className="my-8" />
+          <UploadedFileTable />
         </Fieldset>
+        <DeleteAllFiles />
       </div>
     </>
   )

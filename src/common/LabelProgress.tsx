@@ -3,7 +3,7 @@ import React from 'react'
 const LabelProgress = ({label , progress} : {label : string , progress : number}) => {
   return (
     <>
-    <div className="flex justify-between mb-1">
+    <div className="flex justify-between my-2">
     <span className="text-sm text-emerald-600">{label}</span>
     <span className="text-sm font-medium text-emerald-600">{progress}%</span>
   </div>
