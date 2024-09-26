@@ -1,5 +1,4 @@
 "use client";
-import TodayLocaleDate from "@/utils/TodayLocaleDate";
 import { Button, Divider } from "@nextui-org/react";
 import React, { useState } from "react";
 import { BiLogOut, BiMenu } from "react-icons/bi";
@@ -13,13 +12,15 @@ import { useGetUser } from "hooks/useAuth";
 import { DeleteCookies } from "@/utils/DeleteCookies";
 import { GetAccessTokenFromCookie } from "@/utils/GetAccessTokenFromCookie";
 import { useMutation } from "@tanstack/react-query";
+import { DateObject } from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
 
 function Header() {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const CompleteDate = TodayLocaleDate().split(",");
-  const SplitDate = CompleteDate[0].split(" ");
+  const todayDate = new DateObject({ calendar: persian, locale: persian_fa })
   const {data: userInfo} = useGetUser();
   const { mutateAsync: mutateLogoutUser } = useMutation({
     mutationFn: LogoutUser,
@@ -64,11 +65,8 @@ function Header() {
           <h6 className='font-bold text-sm sm:text-2xl text-primary-950'>{userInfo?.results.first_name} {userInfo?.results.last_name} عزیز؛ خوش آمدید</h6>
           }
             <Divider orientation='vertical' className='h-6 bg-gray-400'/>
-          <p className="flex-center gap-x-1 text-gray-500 font-normal text-xs sm:text-base text-left">
-            <span>{CompleteDate[1]},</span>
-            <span>{SplitDate[2]}</span>
-            <span>{SplitDate[1]}</span>
-            <span>{SplitDate[0]}</span>
+          <p className="flex-center gap-x-1 text-gray-500 font-normal text-xs sm:text-base dir-ltr">
+           {todayDate.weekDay.name}, {todayDate.day} {todayDate.month.name} {todayDate.year}
           </p>
         </div>
         <Button
