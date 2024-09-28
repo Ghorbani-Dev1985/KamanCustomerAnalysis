@@ -1,14 +1,8 @@
-import DatesSubHeader from '@/common/SelectDatesHeader/DatesSubHeader'
 import React from 'react'
-import ShowSummeryInfos from './_components/ShowSummeryInfos'
+import SummeryView from './_components/SummeryView'
 
 const Overview = () => {
-  return (
-    <>
-       <DatesSubHeader />
-       <ShowSummeryInfos />
-    </>
-  )
+  return <SummeryView />
 }
 
 export default Overview

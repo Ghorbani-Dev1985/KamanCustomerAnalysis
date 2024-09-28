@@ -57,7 +57,7 @@ const DateEntryView = () => {
           </div>
           <UploadFile setIsUploadFile={setIsUploadFile} isUploadFile={isUploadFile} />
           <Divider className="my-8" />
-          <UploadedFileTable />
+          {/* <UploadedFileTable /> */}
         </Fieldset>
         <DeleteAllFiles />
       </div>

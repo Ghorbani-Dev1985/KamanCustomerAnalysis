@@ -91,6 +91,7 @@ function SelectDesiredDates({isEnterUserDate , setIsEnterUserDate} : {isEnterUse
                   items={SelectDateItems}
                   aria-label="انتخاب بازه زمانی"
                   aria-labelledby="انتخاب بازه زمانی"
+                  placeholder='یکی از موارد را انتخاب نمایید'
                   defaultSelectedKeys="1"
                   onChange={SelectDatePeriodHandler}
                   variant="bordered"        

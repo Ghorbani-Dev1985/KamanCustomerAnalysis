@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ShowSummeryInfos() {
+function ShowSummeryInfos({factorInfos , productInfos} : {factorInfos : any , productInfos : any}) {
   return (
     <section className='grid grid-cols-4 grid-rows-2 gap-6 my-3'>
       <div className='w-full min-h-36 flex flex-col justify-between bg-white rounded-lg p-4 shadow-sm'>1</div>

@@ -28,5 +28,5 @@ export const GetUploadedFileList = async () => {
         headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then(({data}) => data.results)
+    }).then(({data}) => data)
 }

@@ -72,6 +72,7 @@ const SelectCompareDates = ({isCompare} : {isCompare : boolean}) => {
                   items={CompareDateItems}
                   aria-label=" مقایسه با "
                   aria-labelledby="مقایسه با"
+                  placeholder='یکی از موارد را انتخاب نمایید'
                   defaultSelectedKeys="1"
                   onChange={SelectCompareDatePeriodHandler}
                   variant="bordered"

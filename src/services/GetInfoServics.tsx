@@ -5,7 +5,7 @@ export async function GetFactorInfo(data: object){
     return Http.post("/factors_info/" , data , {
         headers : {
             Authorization : `Bearer ${token}`
-        }}).then(({data}) => data)
+        }}).then(({data}) => data.results)
 }
 
 export async function GetProductInfo(data: object){
@@ -13,5 +13,5 @@ export async function GetProductInfo(data: object){
     return Http.post("/products_info/" , data , {
         headers : {
             Authorization : `Bearer ${token}`
-        }}).then(({data}) => data)
+        }}).then(({data}) => data.results)
 }

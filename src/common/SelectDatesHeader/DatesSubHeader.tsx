@@ -14,22 +14,12 @@ import { useGetFactorInfo, useGetProductInfo } from "hooks/useGetInfo";
 import ChangeDateToIso from "@/utils/ChangeDateToIso";
 import toast from "react-hot-toast";
 
-
-const DatesSubHeader = () => {
+const DatesSubHeader = ({setFactorInfos , setProductInfos} : {setFactorInfos : any , setProductInfos : any}) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const datePickerRef = useClickOutside(() => setShowDatePicker(false));
   const [isEnterUserDate, setIsEnterUserDate] = useState(true);
   const [isCompare, setIsCompare] = useState(false);
-  const {startUserDate} = useDates()
-  const {endUserDate} = useDates()
-  const {desiredDatePeriod} = useDates()
-  const {setDesiredDatePeriod} = useDates()
-  const {startCompareUserDate} = useDates()
-  const {endCompareUserDate} = useDates()
-  const {compareDatePeriod} = useDates()
-  const {setCompareDatePeriod} = useDates()
-  const {SplitDesiredDatePeriod} = useDates()
-  const {SplitCompareDatePeriod} = useDates()
+  const {startUserDate, endUserDate , desiredDatePeriod , setDesiredDatePeriod , startCompareUserDate , endCompareUserDate , compareDatePeriod , setCompareDatePeriod , SplitDesiredDatePeriod , SplitCompareDatePeriod} = useDates()
   let GetInfoFormData = new FormData()
   const {isPending : isPendingGetFactorInfo , mutateAsync : GetFactorInfo} = useGetFactorInfo()
   const {isPending : isPendingGetProductInfo , mutateAsync : GetProductInfo} = useGetProductInfo()
@@ -41,16 +31,15 @@ const DatesSubHeader = () => {
       GetInfoFormData.append("end_date2", isEnterUserDate ? ChangeDateToIso(endCompareUserDate) : ChangeDateToIso(SplitCompareDatePeriod[1]))
     }
     try {
-     // const FactorInfo = await GetFactorInfo(GetInfoFormData)
-      const ProductInfo = await GetProductInfo(GetInfoFormData)
-      console.log( ProductInfo)
+      const {data: FactorInfo} = await GetFactorInfo(GetInfoFormData)
+      const {data: ProductInfo} = await GetProductInfo(GetInfoFormData)
+      setFactorInfos(FactorInfo)
+      setProductInfos(ProductInfo)
       setShowDatePicker(false)
     } catch (error) {
        console.log(error)
        toast.error("خطا در دریافت اطلاعات")
-    }
-   
-     
+    } 
   }
   return (
     <section className="relative w-full flex-between bg-white h-20 mb-3 rounded-lg shadow-sm">
