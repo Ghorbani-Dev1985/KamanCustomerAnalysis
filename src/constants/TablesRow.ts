@@ -1,22 +1,22 @@
 export const UploadedFileRowsTable = [
   {
-    id: 1,
-    title: "تاریخ و زمان آپلود",
+    id:"time",
+    label: "تاریخ و زمان آپلود",
   },
   {
-    id: 2,
+    id: "fileName",
     title: "نام فایل",
   },
   {
-    id: 3,
+    id: "fileType",
     title: "نوع",
   },
   {
-    id: 4,
+    id: "count",
     title: "تعداد رکورد‌ها",
   },
   {
-    id: 5,
-    title: "کاربر",
+    id: "act",
+    title: "عملیات",
   },
 ];

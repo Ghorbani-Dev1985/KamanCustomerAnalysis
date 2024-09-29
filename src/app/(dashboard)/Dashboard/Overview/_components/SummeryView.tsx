@@ -1,3 +1,4 @@
+'use client';
 import DatesSubHeader from '@/common/SelectDatesHeader/DatesSubHeader'
 import React, { useState } from 'react'
 import ShowSummeryInfos from './ShowSummeryInfos'

@@ -2,32 +2,60 @@ import React, { Key, useCallback, useMemo, useState } from 'react'
 import { UploadedFileRowsTable } from '@/constants/TablesRow'
 import { Pagination, Selection, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
 import { useGetUploadFileList } from 'hooks/useGetUploadFileList'
-type User = typeof users[0];
+import { DataEntryType } from '@/types/dataEnteryType'
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import { DateObject } from "react-multi-date-picker";
+
 const UploadedFileTable = () => {
     const {data: uploadedFiles , isPending} = useGetUploadFileList()
-    console.log(uploadedFiles && uploadedFiles)
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set([]))
     const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({  column: "age",
       direction: "ascending",
     });
-    const pages = Math.ceil(uploadedFiles.length / rowsPerPage);
+    let uploadedFilesArray: DataEntryType[] = [];
+    for(let i in uploadedFiles){
+      uploadedFilesArray.push(uploadedFiles[i])
+    }
+    const pages = Math.ceil(Number(uploadedFilesArray?.length) / rowsPerPage);
     const items = useMemo(() => {
       const start = (page - 1) * rowsPerPage;
       const end = start + rowsPerPage;
-      return uploadedFiles.slice(start, end);
-    }, [page, uploadedFiles, rowsPerPage]);
+      return uploadedFilesArray.slice(start, end);
+    }, [page, uploadedFilesArray , rowsPerPage]);
     const sortedItems = useMemo(() => {
-      return [...items].sort((a: User, b: User) => {
-        const first = a[sortDescriptor.column as keyof User] as number;
-        const second = b[sortDescriptor.column as keyof User] as number;
+      return [...items].sort((a: DataEntryType, b: DataEntryType) => {
+        const first = a[sortDescriptor.column as keyof DataEntryType] as number;
+        const second = b[sortDescriptor.column as keyof DataEntryType] as number;
         const cmp = first < second ? -1 : first > second ? 1 : 0;
         return sortDescriptor.direction === "descending" ? -cmp : cmp;
       });
     }, [sortDescriptor, items]);
-
-
+    const renderCell = useCallback((dataList: DataEntryType, columnKey: Key) => {
+      const cellValue = dataList[columnKey as keyof DataEntryType];
+      switch (columnKey) {
+        case "time":
+          return new DateObject(dataList.time , { calendar: persian, locale: persian_fa }).format("YYYY/MM/DD HH:mm:ss");
+        case "fileName":
+          return <></>;
+        case "fileName":
+          return <></>;
+        case "fileType":
+          return <></>
+          case "count":
+            return dataList.count.toLocaleString()
+            case "act":
+              return (
+                <div className="relative flex justify-end items-center gap-2">
+                
+                </div>
+              );
+        default:
+          return cellValue;
+      }
+    }, []);
   const onRowsPerPageChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(Number(e.target.value));
     setPage(1);
@@ -35,16 +63,7 @@ const UploadedFileTable = () => {
   const bottomContent = useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <Pagination
-          isCompact
-          showControls
-          showShadow
-          color="primary"
-          page={page}
-          total={pages}
-          onChange={setPage}
-        />
-        <div className="flex w-[30%] justify-end gap-2">
+        <div className="flex w-[30%] gap-2">
           <label className="flex items-center text-default-400 text-small">
           نمایش در هر صفحه
             <select
@@ -60,50 +79,26 @@ const UploadedFileTable = () => {
           </label>
        
         </div>
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          color="primary"
+          page={page}
+          total={pages}
+          onChange={setPage}
+        />
       </div>
     );
-  }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
-  const renderCell = useCallback((user: User, columnKey: Key) => {
-    const cellValue = user[columnKey as keyof User];
-
-    switch (columnKey) {
-      case "name":
-        return (
-         ققث
-        );
-      case "role":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-400">{user.team}</p>
-          </div>
-        );
-      case "status":
-        return (
-          سی
-        );
-      case "actions":
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-          
-          </div>
-        );
-      default:
-        return cellValue;
-    }
-  }, []);
+  }, [selectedKeys, items.length , page, pages ]);
+ console.log(sortedItems)
   return (
     <>
         <Table
       aria-label="Data Table"
-      isHeaderSticky
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      classNames={{
-        wrapper: "max-h-[382px]",
-      }}
       selectedKeys={selectedKeys}
-      selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContentPlacement="outside"
       onSelectionChange={setSelectedKeys}
@@ -119,9 +114,9 @@ const UploadedFileTable = () => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"اطلاعاتی موجود نمی باشد"} items={sortedItems}>
+      <TableBody emptyContent={"اطلاعاتی موجود نمی باشد"} items={sortedItems && sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item.time}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}

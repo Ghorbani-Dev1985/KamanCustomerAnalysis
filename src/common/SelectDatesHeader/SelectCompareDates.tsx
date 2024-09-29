@@ -28,7 +28,6 @@ const SelectCompareDates = ({isCompare} : {isCompare : boolean}) => {
             let endCompareLastMonthDate = new DateObject(desiredDatePeriod[1]).subtract(1, "month");
             startCompareDatePeriod = startCompareLastMonthDate.setDay(1);
             endCompareDatePeriod = endCompareLastMonthDate.add(1, "month").setDay(1);
-             console.log(startCompareLastMonthDate.format("YYYY/MM/DD") , endCompareLastMonthDate.format("YYYY/MM/DD"));
              setCompareDatePeriod([startCompareDatePeriod , endCompareDatePeriod]);
               return;
           
@@ -37,7 +36,6 @@ const SelectCompareDates = ({isCompare} : {isCompare : boolean}) => {
              let endCompareLastYearDate = new DateObject(desiredDatePeriod[1]).subtract(1, "year");
              startCompareDatePeriod = startCompareLastYearDate.setDay(1);
              endCompareDatePeriod = endCompareLastYearDate.add(1, "year").setDay(1);
-             console.log(startCompareLastYearDate.format("YYYY/MM/DD") , endCompareLastYearDate.format("YYYY/MM/DD"));
              setCompareDatePeriod([startCompareDatePeriod , endCompareDatePeriod]);
             return;
           default:

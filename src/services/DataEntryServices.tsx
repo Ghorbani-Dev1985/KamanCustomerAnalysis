@@ -23,10 +23,11 @@ export const UploadUserFile = async (data: FormData , onUploadProgress: (progres
     }).then(({data}) => data)
 }
 export const GetUploadedFileList = async () => {
+    let formData = new FormData()
     const token = await GetAccessTokenFromCookie()
-    return Http.post("/list_imports/", {
+    return Http.post("/list_imports/", formData ,{
         headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then(({data}) => data)
+    }).then(({data}) => data.results)
 }
