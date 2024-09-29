@@ -1,5 +1,5 @@
 export interface DataEntryType {
-  id?: number | undefined;
+  id?: string | undefined;
   count: number;
   time: string
 }

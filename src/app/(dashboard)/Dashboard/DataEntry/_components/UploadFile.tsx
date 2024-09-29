@@ -6,7 +6,6 @@ import { useMutation } from "@tanstack/react-query";
 import { UploadUserFile } from "services/DataEntryServices";
 import toast from "react-hot-toast";
 import LabelProgress from "@/common/LabelProgress";
-import { useGetUploadFileList } from "hooks/useGetUploadFileList";
 
 function UploadFile({
   isUploadFile,
@@ -17,8 +16,6 @@ function UploadFile({
 }) {
   const [uploadCSVfile, seUploadCSVfile] = useState<UploadFileType>();
   const [uploadFileProgress, setUploadFileProgress] = useState(0);
-  const {data: uploadedFiles , isPending} = useGetUploadFileList()
-  console.log(uploadedFiles)
   const { mutateAsync: userFileUploadMutation } = useMutation({
     mutationFn: (data: FormData) => {
       return UploadUserFile(data, (progress: number) => {

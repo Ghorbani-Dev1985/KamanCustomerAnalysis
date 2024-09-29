@@ -13,8 +13,7 @@ import { DeleteUploadedFile, DownloadUploadedFile } from 'services/DataEntryServ
 import CustomModal from '@/common/Modal'
 import toast from 'react-hot-toast'
 
-const UploadedFileTable = () => {
-    const {data: uploadedFiles , isPending} = useGetUploadFileList()
+const UploadedFileTable = ({uploadedFilesArray , isPendingUploadedFile} : {uploadedFilesArray : DataEntryType[] , isPendingUploadedFile : boolean}) => {
     const queryClient = useQueryClient();
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -26,14 +25,7 @@ const UploadedFileTable = () => {
     const { mutateAsync: mutateDeleteUploadedFile } = useMutation({mutationFn: DeleteUploadedFile});
     const [deleteUploadedFileID, setDeleteUploadedFileID] = useState<string>("-1");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const getUploadedFilesId = Object.keys(uploadedFiles || [])
-   let uploadedFilesArray: DataEntryType[] = [];
-   getUploadedFilesId.map((item) => {
-      uploadedFilesArray.push({
-        ...uploadedFiles[item],
-        id: item
-      })
-    })
+
     const pages = Math.ceil(Number(uploadedFilesArray?.length) / rowsPerPage);
     const items = useMemo(() => {
       const start = (page - 1) * rowsPerPage;
@@ -48,9 +40,9 @@ const UploadedFileTable = () => {
         return sortDescriptor.direction === "descending" ? -cmp : cmp;
       });
     }, [sortDescriptor, items]);
-    const DownloadUploadedFileHandler = async (id: number) => {
+    const DownloadUploadedFileHandler = async (id: string) => {
       let formData = new FormData()
-       formData.append("excel_id", id.toString())
+       formData.append("excel_id", id)
       try {
        const {results , error} = await mutateDownloadUploadedFile(formData)
         if(!error.hasError){

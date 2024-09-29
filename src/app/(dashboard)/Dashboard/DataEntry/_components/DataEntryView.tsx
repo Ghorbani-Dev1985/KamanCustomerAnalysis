@@ -9,9 +9,28 @@ import { MdOutlineCloudUpload } from 'react-icons/md'
 import UploadFile from './UploadFile'
 import UploadedFileTable from './UploadedFileTable'
 import DeleteAllFiles from './DeleteAllFiles'
-
+import { useGetUploadFileList } from 'hooks/useGetUploadFileList'
+import { DataEntryType } from '@/types/dataEnteryType'
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import { DateObject } from "react-multi-date-picker";
 const DateEntryView = () => {
     const [isUploadFile, setIsUploadFile] = useState(false);
+    const {data: uploadedFiles , isPending : isPendingUploadedFile} = useGetUploadFileList()
+    const getUploadedFilesId = Object.keys(uploadedFiles || [])
+    let uploadedFilesArray: DataEntryType[] = [];
+    getUploadedFilesId.map((item : any) => {
+       uploadedFilesArray.push({
+         ...uploadedFiles[item],
+         id: item
+       })
+     })
+     uploadedFilesArray.sort((dateA, dateB) => {
+       return new Date(dateB.time).getTime() - new Date(dateA.time).getTime();
+     });
+     const date = new DateObject(uploadedFilesArray[0]?.time).convert(persian, persian_fa)
+      const time = uploadedFilesArray[0]?.time.toString().slice(11 , 19)  
+    console.log(uploadedFilesArray)
   return (
     <>
       <div className="w-full bg-white/50 flex flex-col items-center gap-y-5 md:flex-row md:flex-between px-5 py-6 rounded-tr-lg rounded-tl-lg border-b border-gray-100">
@@ -22,7 +41,10 @@ const DateEntryView = () => {
           radius="lg"
           startContent={<SiTicktick className="size-4 text-emerald-500" />}
         >
-          آخرین زمان ورود داده :
+          <div className='flex-center gap-x-1'>
+          <p> آخرین زمان ورود داده :</p>
+          <p className='dir-ltr'>{date.format("YYYY/MM/DD")} - {time}</p>
+          </div>
         </Chip>
       </div>
       <div className="bg-white px-5 py-8 shadow-sm rounded-br-lg rounded-bl-lg">
@@ -57,7 +79,7 @@ const DateEntryView = () => {
           </div>
           <UploadFile setIsUploadFile={setIsUploadFile} isUploadFile={isUploadFile} />
           <Divider className="my-8" />
-          <UploadedFileTable />
+          <UploadedFileTable uploadedFilesArray={uploadedFilesArray} isPendingUploadedFile={isPendingUploadedFile} />
         </Fieldset>
         <DeleteAllFiles />
       </div>
