@@ -1,24 +1,39 @@
-import React, { Key, useCallback, useMemo, useState } from 'react'
+import React, { ChangeEvent, Key, useCallback, useMemo, useState } from 'react'
 import { UploadedFileRowsTable } from '@/constants/TablesRow'
-import { Pagination, Selection, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
+import { Button, Pagination, Selection, SortDescriptor, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
 import { useGetUploadFileList } from 'hooks/useGetUploadFileList'
 import { DataEntryType } from '@/types/dataEnteryType'
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { DateObject } from "react-multi-date-picker";
+import { HiOutlineTrash } from 'react-icons/hi2'
+import { MdOutlineCloudUpload } from 'react-icons/md'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { DeleteUploadedFile, DownloadUploadedFile } from 'services/DataEntryServices'
+import CustomModal from '@/common/Modal'
+import toast from 'react-hot-toast'
 
 const UploadedFileTable = () => {
     const {data: uploadedFiles , isPending} = useGetUploadFileList()
+    const queryClient = useQueryClient();
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set([]))
     const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({  column: "age",
       direction: "ascending",
     });
-    let uploadedFilesArray: DataEntryType[] = [];
-    for(let i in uploadedFiles){
-      uploadedFilesArray.push(uploadedFiles[i])
-    }
+    const { mutateAsync: mutateDownloadUploadedFile } = useMutation({mutationFn: DownloadUploadedFile});
+    const { mutateAsync: mutateDeleteUploadedFile } = useMutation({mutationFn: DeleteUploadedFile});
+    const [deleteUploadedFileID, setDeleteUploadedFileID] = useState<string>("-1");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const obj = Object.keys(uploadedFiles || [])
+   let uploadedFilesArray: DataEntryType[] = [];
+obj.map((item) => {
+  uploadedFilesArray.push({
+    ...uploadedFiles[item],
+    id: item
+  })
+})
     const pages = Math.ceil(Number(uploadedFilesArray?.length) / rowsPerPage);
     const items = useMemo(() => {
       const start = (page - 1) * rowsPerPage;
@@ -33,13 +48,51 @@ const UploadedFileTable = () => {
         return sortDescriptor.direction === "descending" ? -cmp : cmp;
       });
     }, [sortDescriptor, items]);
-    const renderCell = useCallback((dataList: DataEntryType, columnKey: Key) => {
+    const DownloadUploadedFileHandler = async (id: number) => {
+      let formData = new FormData()
+       formData.append("excel_id", id.toString())
+      try {
+       const {results , error} = await mutateDownloadUploadedFile(formData)
+         
+        if(!error.hasError){
+          const link = document.createElement("a");
+          link.href =  process.env.NEXT_PUBLIC_BASE_URL + results.csv_path;
+          link.setAttribute("download", results.csv_path);
+          link.setAttribute("target", "_blank");
+          document.body.appendChild(link);
+          link.click();
+       }else{
+         toast.error("دریافت فایل با خطا مواجه شد")
+       }
+      } catch (error) {
+        toast.error("خطایی رخ داده است")
+      }
+    }
+    const HandleDeleteFile = async () => {
+      let formData = new FormData()
+      formData.append("excel_id", deleteUploadedFileID)
+      try {
+        const {error} = await mutateDeleteUploadedFile(formData)
+        console.log(error)
+        if(!error.hasError){
+          setIsModalOpen(false)
+          toast.success("فایل با موفقیت حذف شد")
+          queryClient.invalidateQueries({ queryKey: ["getUploadFileList"] });
+        }else{
+          toast.error("خطا در حذف فایل")
+        }
+      } catch (error) {
+        toast.error("خطایی رخ داده است")
+      }
+    }
+    
+      const renderCell = useCallback((dataList: DataEntryType, columnKey: Key) => {
       const cellValue = dataList[columnKey as keyof DataEntryType];
       switch (columnKey) {
         case "time":
-          return new DateObject(dataList.time , { calendar: persian, locale: persian_fa }).format("YYYY/MM/DD HH:mm:ss");
-        case "fileName":
-          return <></>;
+          const date = new DateObject(dataList.time).convert(persian, persian_fa)
+          const time = dataList.time.toString().slice(11 , 19)      
+          return <div className='dir-ltr'>{date.format("YYYY/MM/DD")} - {time}</div>
         case "fileName":
           return <></>;
         case "fileType":
@@ -48,15 +101,23 @@ const UploadedFileTable = () => {
             return dataList.count.toLocaleString()
             case "act":
               return (
-                <div className="relative flex justify-end items-center gap-2">
-                
+                <div className='flex-center gap-x-3'>
+               <Button onPress={() => DownloadUploadedFileHandler(dataList.id!)} isIconOnly color="primary" className='border-gray-100 hover:bg-gray-200 rounded-xl' variant="faded" aria-label="delete file">
+               <MdOutlineCloudUpload className="size-5" />
+              </Button>
+                <Button onPress={() => {
+                  setIsModalOpen(true)
+                  setDeleteUploadedFileID(dataList.id!.toString())
+                }} isIconOnly color="danger" className='border-gray-100 hover:bg-gray-200 rounded-xl' variant="faded" aria-label="delete file">
+                  <HiOutlineTrash className='size-5'/>
+              </Button>
                 </div>
               );
         default:
           return cellValue;
       }
     }, []);
-  const onRowsPerPageChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onRowsPerPageChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(Number(e.target.value));
     setPage(1);
   }, []);
@@ -91,7 +152,6 @@ const UploadedFileTable = () => {
       </div>
     );
   }, [selectedKeys, items.length , page, pages ]);
- console.log(sortedItems)
   return (
     <>
         <Table
@@ -122,6 +182,35 @@ const UploadedFileTable = () => {
         )}
       </TableBody>
     </Table>
+    <CustomModal
+          containerClasses="!block md:!flex"
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        >
+          <CustomModal.Header
+            titleClass="h7-semibold"
+            containerClass="!bg-muted-400 px-5 py-4"
+            onClose={() => setIsModalOpen(false)}
+          >
+            آیا برای خروج مطمعن هستید؟
+          </CustomModal.Header>
+          <CustomModal.Body containerClass="p-3 bg-muted-100">
+            <div className="flex justify-end items-center">
+              <div className="flex-center gap-x-2">
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={() => setIsModalOpen(false)}
+                >
+                  انصراف
+                </Button>
+                <Button color="primary" onPress={HandleDeleteFile}>
+                  تایید
+                </Button>
+              </div>
+            </div>
+          </CustomModal.Body>
+        </CustomModal>
     </>
   )
 }

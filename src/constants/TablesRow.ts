@@ -1,7 +1,7 @@
 export const UploadedFileRowsTable = [
   {
     id:"time",
-    label: "تاریخ و زمان آپلود",
+    title: "تاریخ و زمان آپلود",
   },
   {
     id: "fileName",

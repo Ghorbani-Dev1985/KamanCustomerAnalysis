@@ -35,7 +35,6 @@
     @apply transition-all duration-700;
   }
   .dir-ltr{
-    text-align: left;
     direction: ltr;
   }  
 }

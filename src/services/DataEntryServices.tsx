@@ -31,3 +31,20 @@ export const GetUploadedFileList = async () => {
         }
     }).then(({data}) => data.results)
 }
+
+export const DeleteUploadedFile = async (data : FormData) => {
+    const token = await GetAccessTokenFromCookie()
+    return Http.post("/remove_excel/", data , {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }).then(({data}) => data)
+}
+export const DownloadUploadedFile = async (data : FormData) => {
+    const token = await GetAccessTokenFromCookie()
+    return Http.post("/download_excel/", data , {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }).then(({data}) => data)
+}
