@@ -26,14 +26,14 @@ const UploadedFileTable = () => {
     const { mutateAsync: mutateDeleteUploadedFile } = useMutation({mutationFn: DeleteUploadedFile});
     const [deleteUploadedFileID, setDeleteUploadedFileID] = useState<string>("-1");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const obj = Object.keys(uploadedFiles || [])
+    const getUploadedFilesId = Object.keys(uploadedFiles || [])
    let uploadedFilesArray: DataEntryType[] = [];
-obj.map((item) => {
-  uploadedFilesArray.push({
-    ...uploadedFiles[item],
-    id: item
-  })
-})
+   getUploadedFilesId.map((item) => {
+      uploadedFilesArray.push({
+        ...uploadedFiles[item],
+        id: item
+      })
+    })
     const pages = Math.ceil(Number(uploadedFilesArray?.length) / rowsPerPage);
     const items = useMemo(() => {
       const start = (page - 1) * rowsPerPage;
@@ -53,7 +53,6 @@ obj.map((item) => {
        formData.append("excel_id", id.toString())
       try {
        const {results , error} = await mutateDownloadUploadedFile(formData)
-         
         if(!error.hasError){
           const link = document.createElement("a");
           link.href =  process.env.NEXT_PUBLIC_BASE_URL + results.csv_path;
