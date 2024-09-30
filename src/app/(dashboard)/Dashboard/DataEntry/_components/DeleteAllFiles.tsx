@@ -1,11 +1,12 @@
 import Fieldset from '@/common/Fieldset'
 import { Button } from '@nextui-org/react'
 import React from 'react'
+import toast from 'react-hot-toast'
 import { HiOutlineTrash } from 'react-icons/hi2'
 
 const DeleteAllFiles = () => {
     const DeleteAllFilesHandler = () => {
-
+       toast.error('این قابلیت در حال حاضر فعال نمی باشد')
     }
   return (
     <Fieldset title='حذف داده های کسب و کار'>

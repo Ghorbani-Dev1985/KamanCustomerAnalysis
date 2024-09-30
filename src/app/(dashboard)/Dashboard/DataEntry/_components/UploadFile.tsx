@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { UploadFileType } from "@/types/uploadFileType";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UploadUserFile } from "services/DataEntryServices";
 import toast from "react-hot-toast";
 import LabelProgress from "@/common/LabelProgress";
@@ -16,6 +16,7 @@ function UploadFile({
 }) {
   const [uploadCSVfile, seUploadCSVfile] = useState<UploadFileType>();
   const [uploadFileProgress, setUploadFileProgress] = useState(0);
+  const queryClient = useQueryClient();
   const { mutateAsync: userFileUploadMutation } = useMutation({
     mutationFn: (data: FormData) => {
       return UploadUserFile(data, (progress: number) => {
@@ -37,11 +38,13 @@ function UploadFile({
         setIsUploadFile(false);
         seUploadCSVfile(undefined);
         setUploadFileProgress(0);
+        queryClient.invalidateQueries({ queryKey: ["getUploadFileList"]});
       } else {
         toast.error("در آپلود فایل خطا رخ داده است");
       }
     } catch (error) {
-      console.log("خطایی رخ داده است");
+      toast.error("خطایی رخ داده است");
+      console.log(error)
     }
   };
   return (
@@ -54,8 +57,8 @@ function UploadFile({
           <div className="flex flex-col items-center pt-5 pb-6">
             <MdOutlineCloudUpload className="size-8 mb-4 text-gray-500" />
             <p className="mb-2 text-sm text-gray-500 px-1">
-              <span className="font-semibold">برای آپلود کلیک نمایید</span>
-              یا فایل را بکشید و اینجا رها نمایید
+              <span className="font-semibold">برای آپلود فایل را انتخاب نمایید</span>
+             <span className="hidden lg:flex"> یا فایل را بکشید و اینجا رها نمایید</span>
             </p>
             <p className="text-xs text-gray-500">xlsx , xls , csv , zip</p>
             <p className="text-gray-500 font-bold mt-4">

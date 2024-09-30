@@ -11,9 +11,7 @@ import UploadedFileTable from './UploadedFileTable'
 import DeleteAllFiles from './DeleteAllFiles'
 import { useGetUploadFileList } from 'hooks/useGetUploadFileList'
 import { DataEntryType } from '@/types/dataEnteryType'
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
-import { DateObject } from "react-multi-date-picker";
+import { DateChangeToPersian } from '@/utils/TodayLocaleDate'
 const DateEntryView = () => {
     const [isUploadFile, setIsUploadFile] = useState(false);
     const {data: uploadedFiles , isPending : isPendingUploadedFile} = useGetUploadFileList()
@@ -28,26 +26,26 @@ const DateEntryView = () => {
      uploadedFilesArray.sort((dateA, dateB) => {
        return new Date(dateB.time).getTime() - new Date(dateA.time).getTime();
      });
-     const date = new DateObject(uploadedFilesArray[0]?.time).convert(persian, persian_fa)
-      const time = uploadedFilesArray[0]?.time.toString().slice(11 , 19)  
-    console.log(uploadedFilesArray)
   return (
     <>
       <div className="w-full bg-white/50 flex flex-col items-center gap-y-5 md:flex-row md:flex-between px-5 py-6 rounded-tr-lg rounded-tl-lg border-b border-gray-100">
         <p>مدیریت داده‌های کسب و کار</p>
         <Chip
           variant="flat"
-          className="bg-emerald-50 text-zinc-700 px-3 py-6"
+          className="bg-emerald-50 text-zinc-700 text-xs md:text-base md:px-3 py-6"
           radius="lg"
           startContent={<SiTicktick className="size-4 text-emerald-500" />}
         >
           <div className='flex-center gap-x-1'>
           <p> آخرین زمان ورود داده :</p>
-          <p className='dir-ltr'>{date.format("YYYY/MM/DD")} - {time}</p>
+          {
+             !isPendingUploadedFile &&
+          <p className='dir-ltr'>{DateChangeToPersian(uploadedFilesArray[0]?.time)}</p>
+          }
           </div>
         </Chip>
       </div>
-      <div className="bg-white px-5 py-8 shadow-sm rounded-br-lg rounded-bl-lg">
+      <div className="bg-white px-5 py-8 shadow-sm rounded-br-lg rounded-bl-lg overflow-x-auto">
         <Fieldset title="ورود داده">
            <p className='text-justify'>
             در این بخش می توانید داده‌های خود را در قالب یک فایل xlsx , xls ,

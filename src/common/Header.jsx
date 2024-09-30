@@ -1,5 +1,4 @@
 "use client";
-import TodayLocaleDate from "@/utils/TodayLocaleDate";
 import { Button, Divider } from "@nextui-org/react";
 import React, { useState } from "react";
 import { BiLogOut, BiMenu } from "react-icons/bi";
@@ -13,6 +12,7 @@ import { useGetUser } from "hooks/useAuth";
 import { DeleteCookies } from "@/utils/DeleteCookies";
 import { GetAccessTokenFromCookie } from "@/utils/GetAccessTokenFromCookie";
 import { useMutation } from "@tanstack/react-query";
+import { TodayLocaleDate } from "@/utils/TodayLocaleDate";
 
 function Header() {
   const router = useRouter();
@@ -89,7 +89,7 @@ function Header() {
             containerClass="!bg-muted-400 px-5 py-4"
             onClose={() => setIsModalOpen(false)}
           >
-            آیا برای خروج مطمعن هستید؟
+            آیا برای خروج اطمینان دارید؟
           </CustomModal.Header>
           <CustomModal.Body containerClass="p-3 bg-muted-100">
             <div className="flex justify-end items-center">

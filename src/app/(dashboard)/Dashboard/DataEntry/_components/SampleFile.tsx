@@ -11,7 +11,7 @@ const SampleFile = () => {
          const sampleFile = await mutateGetSampleFile()
         if(!sampleFile.error.hasError){
            const link = document.createElement("a");
-           link.href =  process.env.NEXT_PUBLIC_BASE_URL + sampleFile.results.link;
+           link.href =  process.env.NEXT_PUBLIC_MAIN_PATH + sampleFile.results.link;
            link.setAttribute("download", sampleFile.file_name);
            link.setAttribute("target", "_blank");
            document.body.appendChild(link);
