@@ -12,14 +12,14 @@ import { useGetUser } from "hooks/useAuth";
 import { DeleteCookies } from "@/utils/DeleteCookies";
 import { GetAccessTokenFromCookie } from "@/utils/GetAccessTokenFromCookie";
 import { useMutation } from "@tanstack/react-query";
-import { TodayLocaleDate } from "@/utils/TodayLocaleDate";
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
 
 function Header() {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const CompleteDate = TodayLocaleDate().split(",");
-  const SplitDate = CompleteDate[0].split(" ");
+  const todayDate = new DateObject({ calendar: persian, locale: persian_fa })
   const {data: userInfo} = useGetUser();
   const { mutateAsync: mutateLogoutUser } = useMutation({
     mutationFn: LogoutUser,
@@ -65,10 +65,7 @@ function Header() {
           }
             <Divider orientation='vertical' className='h-6 bg-gray-400'/>
           <p className="flex-center gap-x-1 text-gray-500 font-normal text-xs sm:text-base text-left">
-            <span>{CompleteDate[1]},</span>
-            <span>{SplitDate[2]}</span>
-            <span>{SplitDate[1]}</span>
-            <span>{SplitDate[0]}</span>
+          {todayDate.weekDay.name}, {todayDate.day} {todayDate.month.name} {todayDate.year}
           </p>
         </div>
         <Button
