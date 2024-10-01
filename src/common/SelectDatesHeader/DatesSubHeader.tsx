@@ -4,7 +4,8 @@ import {Button,Checkbox, Divider} from "@nextui-org/react";
 import useClickOutside from "hooks/useClickOutside";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { HiCalendarDays, HiOutlineInformationCircle } from "react-icons/hi2";
+import { HiCalendarDays } from "react-icons/hi2";
+import { HiOutlineLightBulb } from "react-icons/hi";
 import { Calendar } from "react-multi-date-picker";
 import SelectDesiredDates from "./SelectDesiredDates";
 import { useDates } from "@/context/DatesContext";
@@ -153,7 +154,7 @@ const DatesSubHeader = ({setFactorInfos , setProductInfos} : {setFactorInfos : a
         </div>
       </div>
       <div className="flex-center font-normal h-full gap-x-1 pl-1.5">
-        <HiOutlineInformationCircle className="size-4" />
+        <HiOutlineLightBulb  className="size-4" />
         <span>راهنما</span>
       </div>
     </section>
