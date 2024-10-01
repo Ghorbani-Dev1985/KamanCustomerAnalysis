@@ -28,8 +28,10 @@
   input[type="number"] {
     -moz-appearance: textfield; /* Firefox */
   }
+  button{
+   @apply disabled:opacity-70 disabled:bg-gray-400
+  }
 }
-
 @layer components {
 }
 

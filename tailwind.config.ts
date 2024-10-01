@@ -86,6 +86,11 @@ const config : Config = {
         medium: "0.375rem", 
         large: "0.5rem", 
       },
+      border: {
+        small: "0.063rem",
+        medium: "0.125rem",
+        large: "0.188rem",
+      },
      },
      themes: {
       light: {
