@@ -39,7 +39,10 @@ const config : Config = {
            },
            secondary: '#c94040',
            success: 'rgb(0 , 192 , 115)',
-           warning: 'rgb(255 , 153 , 0)',
+           warning: {
+            DEFAULT: "#404040",
+            foreground: "#d4d4d4",
+        },
            error: 'rgb(255,71 , 87)',
            danger: '#f43f5e'
        },
@@ -111,11 +114,14 @@ const config : Config = {
             950: "#1d2c4e",
             DEFAULT: "#2c51a3",
              },
-             secondary: '#c94040',
-             success: 'rgb(0 , 192 , 115)',
-             warning: 'rgb(255 , 153 , 0)',
-             error: 'rgb(255,71 , 87)',
-             danger: '#f43f5e'
+          secondary: '#c94040',
+          success: 'rgb(0 , 192 , 115)',
+          warning: {
+              DEFAULT: "#404040",
+              foreground: "#d4d4d4",
+          },
+          error: 'rgb(255,71 , 87)',
+          danger: '#f43f5e'
          },
       },
     

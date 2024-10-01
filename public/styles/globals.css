@@ -6,35 +6,44 @@
   * {
     @apply p-0 m-0 box-border;
   }
-  html{
+  html {
     @apply scroll-smooth scrollbar-thin scrollbar-thumb-primary scrollbar-track-primary-100 overflow-x-hidden;
   }
-  li{
-    @apply list-none
+  li {
+    @apply list-none;
   }
-  p{
-  @apply leading-8
+  p {
+    @apply leading-8;
   }
   body {
     @apply font-IRANSansWeb text-base overflow-x-hidden scroll-smooth;
   }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+  }
 }
 
 @layer components {
- 
 }
 
 @layer utilities {
-  .flex-center{
-    @apply flex justify-center items-center
+  .flex-center {
+    @apply flex justify-center items-center;
   }
-  .flex-between{
-    @apply flex justify-between items-center
+  .flex-between {
+    @apply flex justify-between items-center;
   }
   .smooth-transition {
     @apply transition-all duration-700;
   }
-  .dir-ltr{
+  .dir-ltr {
     direction: ltr;
-  }  
+  }
 }
