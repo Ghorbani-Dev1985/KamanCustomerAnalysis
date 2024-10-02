@@ -16,9 +16,10 @@ export function LoginWithEmailFN(data : object){
 export function ChangePassword(data: object){
     return Http.post("/change_password/" , data).then(({data}) => data);
 }
-export function LogoutUser(data : string | undefined){
-    return Http.get("/user_logout/" , {
+export async function LogoutUser(){
+    const token = await GetAccessTokenFromCookie()
+    return Http.get("/user_logout/", {
         headers : {
-            Authorization : `Bearer ${data}`
+            Authorization : `Bearer ${token}`
         }}).then(({data}) => data)
 }

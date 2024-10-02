@@ -10,7 +10,6 @@ import Drawer from "./Drawer";
 import MenuItemView from "./MenuItemView";
 import { useGetUser } from "hooks/useAuth";
 import { DeleteCookies } from "@/utils/DeleteCookies";
-import { GetAccessTokenFromCookie } from "@/utils/GetAccessTokenFromCookie";
 import { useMutation } from "@tanstack/react-query";
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
@@ -26,9 +25,8 @@ function Header() {
     mutationFn: LogoutUser,
   });
   const UserLogoutHandler = async () => {
-    const token = await GetAccessTokenFromCookie()
     try {
-      const result = await mutateLogoutUser(token)
+      const result = await mutateLogoutUser()
       if(result.isSuccess){
           toast.success("خروج از حساب کاربری با موفقیت انجام شد")
           setIsModalOpen(false);

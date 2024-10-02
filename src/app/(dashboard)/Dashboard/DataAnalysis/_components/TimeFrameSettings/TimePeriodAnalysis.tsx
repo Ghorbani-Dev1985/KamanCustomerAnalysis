@@ -17,7 +17,7 @@ const TimePeriodAnalysis = ({setSelectTimePeriod , userTimePeriod , setUserTimeP
     }
   return (
      <Fieldset title='دوره زمانی تحلیل'>
-        <p className='my-8'>در این بخش می توانید بازه زمانی تحلیل ر انتخاب کنید وضعیت مشتریان در صفحات بخش‌بندی مشتریان، ارزش طول عمر مشتریان، فاصله خرید مشتریان، خوشه بندی مشتریان برحسب این بازه زمانی در نظر گرفته می شود.</p>
+        <p className='my-8'>در این بخش می توانید بازه زمانی تحلیل را انتخاب کنید وضعیت مشتریان در صفحات بخش‌بندی مشتریان، ارزش طول عمر مشتریان، فاصله خرید مشتریان، خوشه بندی مشتریان برحسب این بازه زمانی در نظر گرفته می شود.</p>
         <RadioGroup
       orientation="horizontal"
       classNames={{base: "w-full" , wrapper: "flex-between"}}
