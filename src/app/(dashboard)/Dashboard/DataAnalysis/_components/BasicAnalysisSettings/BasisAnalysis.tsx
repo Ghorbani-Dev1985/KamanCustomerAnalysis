@@ -1,14 +1,12 @@
 'use client';
 import Fieldset from '@/common/Fieldset'
-import SingleAccordion from '@/common/SingleAccordion';
 import { BasicAnalysisItems } from '@/constants/BasicAnalysisItems';
 import { Accordion, AccordionItem, Input, Select, SelectItem } from '@nextui-org/react';
-import React, { Dispatch, FocusEvent, SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 
 const BasisAnalysis = () => {
-  const [isOpenSingleAccordion, setIsOpenSingleAccordion] = useState(false)
-   
+     
   return (
      <Fieldset title='پایه تحلیل'>
         <p className='my-8'>در این بخش می توانید بازه زمانی تحلیل را براساس فیلترهای مورد نیاز اعمال نمایید. این اعمال تغییرات در نتیجه کل تحلیل در صفحات نمای کلی، بخش بندی مشتریان، جابجایی مشتریان، ارزش طول عمر مشتریان، خوشه بندی مشتریان، تحلیل سبد مشتریان تاثیر دارد. </p>
@@ -18,7 +16,6 @@ const BasisAnalysis = () => {
           return (
                
       <AccordionItem key={id} aria-label={title} title={title} classNames={{base: "shadow-sm border px-0 overflow-hidden my-2" , heading : "px-1 bg-gray-100 rtl:data-[open=true]:border-b", title : "text-zinc-700 text-base" , content : "px-2 py-10" , indicator : "rtl:-rotate-90 rtl:data-[open=true]:rotate-90"}}>
-      
                     <div className='flex-between gap-x-2.5'>
                        <Select 
             variant="bordered"
@@ -36,13 +33,9 @@ const BasisAnalysis = () => {
                  برابر نیست با
               </SelectItem>
           </Select>
-                       
                        <div className='flex-1 '> <Input placeholder='جستجو کنید' variant="bordered" classNames={{input: "text-zinc-600 placeholder:text-gray-300"}} name={inputName}  /></div>
                     </div>
       </AccordionItem>
-     
-                 
-              
             )
           })
         }
