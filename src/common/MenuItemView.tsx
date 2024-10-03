@@ -5,9 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { BiCaretLeft } from "react-icons/bi";
-import { Accordion, AccordionItem, link } from "@nextui-org/react";
+import { Accordion, AccordionItem, link, Selection } from "@nextui-org/react";
 function MenuItemView() {
   const pathName = usePathname();
+  const activeSubmenu = MenuItems.find(item => item.subMenu && item.subMenu.some(subItem => subItem.href === pathName))
+  const activeTitle = activeSubmenu ? activeSubmenu.title : ''
+  const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set([activeTitle]));
   return (
     <>
       <div className="min-h-36">
@@ -25,8 +28,10 @@ function MenuItemView() {
         {MenuItems.map(({ id, title, href, icon, subMenu }) => {
           if (subMenu) {
             return (
-              <Accordion key={id} variant="light" className="!px-0">
+              <Accordion key={id} variant="light" className="!px-0"  selectedKeys={selectedKeys}
+              onSelectionChange={setSelectedKeys}>
                 <AccordionItem
+                key={title}
                   aria-label={title}
                   startContent={icon}
                   title={title}
@@ -83,5 +88,4 @@ function MenuItemView() {
       </div>
     </>
   );
-}
-export default MenuItemView;
+}export default MenuItemView;

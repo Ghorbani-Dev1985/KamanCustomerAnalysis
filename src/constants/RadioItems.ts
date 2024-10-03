@@ -42,3 +42,42 @@ export const purchaseAmountIndexRadioItems = [
     tooltip: "  مبلغ خالص پرداختی فاکتور در یک دوره زمانی قابل انتخاب است.",
   }
 ];
+
+export const NumberPurchaseIndexRadioItems = [
+  {
+    id: 1,
+    label: " تعداد فاکتورهای فروش ",
+    value: "numberSalesInvoices",
+    tooltip: " میانگینی از مبلغ فاکتورهای فروخته شده در یک دوره زمانی قابل انتخاب است.",
+  },
+  {
+    id: 2,
+    label: "میانگین تعداد محصول در فاکتور",
+    value: "averageNumberProductsInvoice",
+    tooltip: " فروش ناخالص در یک دوره زمانی قابل انتخاب است.",
+  },
+  {
+    id: 3,
+    label: " میانگین تعداد سطر در فاکتور",
+    value: "averageNumberLinesInvoice",
+    tooltip: "میانگینی از مبلغ فاکتورهای فروخته شده در یک دوره زمانی قابل انتخاب است.",
+  },
+  {
+    id: 4,
+    label: "تعداد خالص فاکتور‌ها",
+    value: "netNumberInvoices",
+    tooltip: " میانگینی از مبلغ فاکتورهای فروخته شده در یک دوره زمانی قابل انتخاب است.",
+  },
+  {
+    id: 5,
+    label: "تنوع محصولات مشتری",
+    value: "varietyCustomerProducts",
+    tooltip: " وزن محصولات در فاکتور‌های فروش در یک دوره زمانی قابل انتخاب است.",
+  },
+  {
+    id: 6,
+    label: "تعداد خالص محصولات فروخته شده",
+    value: "netNumberProductsSold",
+    tooltip: " وزن محصولات در تمام فاکتور‌ها در یک دوره زمانی قابل انتخاب است.",
+  },
+];
