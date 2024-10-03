@@ -8,6 +8,7 @@ import NextTopLoader from "nextjs-toploader";
 import ReactQueryProvider from "../Providers";
 import SideBar from "@/common/SideBar";
 import Header from "@/common/Header";
+
 export const metadata: Metadata = {
   title: {
     template: "%s | تحلیل مشتریان کمان",

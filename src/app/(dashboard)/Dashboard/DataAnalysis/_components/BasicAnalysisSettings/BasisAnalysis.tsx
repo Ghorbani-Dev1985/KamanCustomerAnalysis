@@ -13,8 +13,7 @@ const BasisAnalysis = () => {
         <Accordion variant="splitted" className='!px-0'>
        {
         BasicAnalysisItems.map(({id, title , inputName}) => {
-          return (
-               
+          return ( 
       <AccordionItem key={id} aria-label={title} title={title} classNames={{base: "shadow-sm border px-0 overflow-hidden my-2" , heading : "px-1 bg-gray-100 rtl:data-[open=true]:border-b", title : "text-zinc-700 text-base" , content : "px-2 py-10" , indicator : "rtl:-rotate-90 rtl:data-[open=true]:rotate-90"}}>
                     <div className='flex-between gap-x-2.5'>
                        <Select 
