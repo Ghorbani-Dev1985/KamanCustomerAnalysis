@@ -13,7 +13,7 @@ const SelectNumberPurchaseIndex = ({setSelectNumberPurchase} : {setSelectNumberP
       orientation="horizontal"
       classNames={{base: "w-full" , wrapper: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}}
       onChange={(e) => setSelectNumberPurchase(e.target.value)}
-      defaultValue={"grossSales"}
+      defaultValue={"numberSalesInvoices"}
     >
         {
             NumberPurchaseIndexRadioItems.map(({id , label , value , tooltip}) => (
