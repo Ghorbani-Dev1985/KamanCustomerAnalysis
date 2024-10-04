@@ -1,11 +1,12 @@
-import React, { Dispatch, ReactNode, SetStateAction } from 'react'
+import React, { Dispatch, ReactNode, SetStateAction, useEffect } from 'react'
 import Fieldset from '@/common/Fieldset'
 import { Accordion, AccordionItem} from '@nextui-org/react'
 import { useForm, UseFormRegister } from 'react-hook-form'
 import { HiMiniChevronLeft, HiMiniMinus } from 'react-icons/hi2'
 import { MdOutlinePercent } from 'react-icons/md'
-const ScoringMethod = ({children , handler , setIsScoringMethod} : {children : ReactNode , handler : (data : any) => void , setIsScoringMethod : Dispatch<SetStateAction<boolean>>}) => {
-  const {register,handleSubmit , getValues , watch} = useForm({
+const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSettings} : {children : ReactNode , handler : (data : any) => void , setIsScoringMethod : Dispatch<SetStateAction<boolean>> , dataAnalysisSettings : any}) => {
+  console.log(dataAnalysisSettings?.results.recency1)
+  const {register,handleSubmit , getValues , watch, setValue} = useForm({
     defaultValues: {
       recency100: 100,
       recency80: 80,
@@ -27,9 +28,24 @@ const ScoringMethod = ({children , handler , setIsScoringMethod} : {children : R
       monetary0: 0,
     }
   });
-  if(watch("recency100") != 100 || watch("recency80") != 80 || watch("recency60") != 60 || watch("recency40") != 40 || watch("recency20") != 20 || watch("recency0") != 0 || watch("frequency100") != 100 || watch("frequency80") != 80 || watch("frequency60") != 60 || watch("frequency40") != 40 || watch("frequency20") != 20 || watch("frequency0") != 0 || watch("monetary100") != 100 || watch("monetary80") != 80 || watch("monetary60") != 60 || watch("monetary40") != 40 || watch("monetary20") != 20 || watch("monetary0") != 0){
+  useEffect(() => {
+    if(dataAnalysisSettings){
+      setValue("recency20", dataAnalysisSettings?.results.recency1)
+      setValue("recency40", dataAnalysisSettings?.results.recency2)
+      setValue("recency60", dataAnalysisSettings?.results.recency3)
+      setValue("recency80", dataAnalysisSettings?.results.recency4)
+      setValue("frequency20", dataAnalysisSettings?.results.frequency1)
+      setValue("frequency40", dataAnalysisSettings?.results.frequency2)
+      setValue("frequency60", dataAnalysisSettings?.results.frequency3)
+      setValue("frequency80", dataAnalysisSettings?.results.frequency4)
+      setValue("monetary20", dataAnalysisSettings?.results.monetary1)
+      setValue("monetary40", dataAnalysisSettings?.results.monetary2)
+      setValue("monetary60", dataAnalysisSettings?.results.monetary3)
+      setValue("monetary80", dataAnalysisSettings?.results.monetary4)
+    }
+  },[dataAnalysisSettings])
+  if(watch("recency80") != 80 || watch("recency60") != 60 || watch("recency40") != 40 || watch("recency20") != 20 || watch("frequency80") != 80 || watch("frequency60") != 60 || watch("frequency40") != 40 || watch("frequency20") != 20 || watch("monetary80") != 80 || watch("monetary60") != 60 || watch("monetary40") != 40 || watch("monetary20") != 20){
     setIsScoringMethod(true)
-    console.log("wew")
   }else{
     setIsScoringMethod(false)
   }
@@ -123,7 +139,7 @@ type FieldValues = any
 export const ScoringMethodInput = ({register, name , value } : {register: UseFormRegister<FieldValues>, name : string , value : number}) => {
   return (
     <div className="relative">
-           <input {...register(name)} max={100} type="number" className="bg-gray-50 border outline-none border-gray-300 text-zinc-700
+           <input {...register(name)}  type="number" min={0} max={100} className="bg-gray-50 border outline-none border-gray-300 text-zinc-700
            rounded-lg focus:border-primary block lg:max-w-20 xl:max-w-28 text-center ps-10 p-2.5"
             placeholder={value.toString()} />
          <div className="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
@@ -132,7 +148,6 @@ export const ScoringMethodInput = ({register, name , value } : {register: UseFor
            </div>
   )
 }
-
 export const ArrowLine = () => {
   return(
     <div className='flex flex-col'>
@@ -141,7 +156,6 @@ export const ArrowLine = () => {
     </div>
   )
 }
-
 export const ScoringMethodResultBox = ({startPercent , endPercent , sectionScore , countResult, percentResult} : {startPercent : number , endPercent : number , sectionScore : number , countResult : number , percentResult : number}) => {
   return (
     <div className='flex flex-col items-center text-zinc-700 gap-y-3 border rounded-md'>
