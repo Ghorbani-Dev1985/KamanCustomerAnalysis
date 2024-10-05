@@ -71,7 +71,7 @@ const CustomerSegmentationSettings = () => {
   <ScoringMethod handler={CustomerSegmentationSettingsHandler} setIsScoringMethod={setIsScoringMethod} dataAnalysisSettings={dataAnalysisSettings}>
   <div className='w-full flex justify-end items-center gap-x-2'>
     <Button color="primary" variant="bordered" onPress={() => setIsOpenSingleAccordion(false)}>انصراف </Button>
-     <Button type='submit' onClick={CustomerSegmentationSettingsHandler} color="primary" disabled={(selectPurchaseAmount === "grossSales" && selectNumberPurchase === "numberSalesInvoices" && !isRemoveOutliers && numCustomerCategories === 11 && !isScoringMethod && isPending) && true} startContent={<LiaSave className='size-4'/>}>
+     <Button type='submit' onClick={CustomerSegmentationSettingsHandler} color="primary" disabled={(selectPurchaseAmount === "grossSales" && selectNumberPurchase === "numberSalesInvoices" && isRemoveOutliers == dataAnalysisSettings?.results?.outlayer && numCustomerCategories == dataAnalysisSettings?.results?.segment && !isScoringMethod && !isPending) && true} startContent={<LiaSave className='size-4'/>}>
        {
         isPending ? <Spinner color='white' size='md'/> : <span>ذخیره تنظیمات</span> 
        }

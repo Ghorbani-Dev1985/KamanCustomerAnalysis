@@ -43,8 +43,8 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
       setValue("monetary60", dataAnalysisSettings?.results.monetary3)
       setValue("monetary80", dataAnalysisSettings?.results.monetary4)
     }
-  },[dataAnalysisSettings])
-  if(watch("recency80") != 80 || watch("recency60") != 60 || watch("recency40") != 40 || watch("recency20") != 20 || watch("frequency80") != 80 || watch("frequency60") != 60 || watch("frequency40") != 40 || watch("frequency20") != 20 || watch("monetary80") != 80 || watch("monetary60") != 60 || watch("monetary40") != 40 || watch("monetary20") != 20){
+  },[dataAnalysisSettings, setValue])
+  if(watch("recency80") != dataAnalysisSettings?.results.recency4 || watch("recency60") != dataAnalysisSettings?.results.recency3 || watch("recency40") != dataAnalysisSettings?.results.recency2 || watch("recency20") != dataAnalysisSettings?.results.recency1 || watch("frequency80") != dataAnalysisSettings?.results.frequency4 || watch("frequency60") != dataAnalysisSettings?.results.frequency3 || watch("frequency40") != dataAnalysisSettings?.results.frequency2 || watch("frequency20") != dataAnalysisSettings?.results.frequency1 || watch("monetary80") != dataAnalysisSettings?.results.monetary4 || watch("monetary60") != dataAnalysisSettings?.results.monetary3 || watch("monetary40") != dataAnalysisSettings?.results.monetary2 || watch("monetary20") != dataAnalysisSettings?.results.monetary1){
     setIsScoringMethod(true)
   }else{
     setIsScoringMethod(false)
