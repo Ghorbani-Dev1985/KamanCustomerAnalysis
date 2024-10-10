@@ -1,6 +1,6 @@
 'use client';
 import { UserPassType } from "@/types/loginRegisterFormType";
-import { Button, Spacer } from "@nextui-org/react";
+import { Button, Spacer, Spinner } from "@nextui-org/react";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -20,20 +20,20 @@ const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
     handleSubmit,
     formState: { errors },
   } = useForm<UserPassType>({ mode: "onChange" , resolver: yupResolver(LoginWithEmailValidationSchema)});
-  const {mutateAsync: mutateLogin} = useMutation({mutationFn : LoginWithEmailFN})
+  const {isPending ,mutateAsync: mutateLogin} = useMutation({mutationFn : LoginWithEmailFN})
   const LoginWithEmailHandler: SubmitHandler<UserPassType> = async (data) => {
     let formData = new FormData();
     formData.append("username", data.username);
     formData.append("password", data.password);
     try { 
-      const userInfo =  await mutateLogin(formData)
+      const userInfo = await mutateLogin(formData)
       if(userInfo.isSuccess){
       router.replace("/Dashboard/Overview")
       toast.success("ورود با موفقیت انجام شد")
       await StoreTokenInCookie(userInfo.access_token , userInfo.refresh_token)
       }
     }catch (error: any) {
-      if(error.status === 401){
+      if(error.response.status === 401){
         toast.error("اطلاعات وارد شده صحیح نمی باشد")
       }else{
         toast.error("خطایی رخ داده است")
@@ -65,8 +65,10 @@ const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
           showPassword={true}
         />
         <Spacer y={2.5}/>
-        <Button type="submit" fullWidth size="lg" color="primary">
-          ورود به حساب کاربری
+        <Button type="submit" disabled={isPending && true} fullWidth size="lg" color="primary">
+         {
+          isPending ? <Spinner size="md" color="white"/> : " ورود به حساب کاربری"
+         }
         </Button>
       </form>
       <div onClick={() => setStep(2)} className="flex cursor-pointer my-3 text-zinc-500 hover:text-primary font-normal transition-colors">

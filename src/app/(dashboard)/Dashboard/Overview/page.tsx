@@ -1,14 +1,8 @@
-import DatesSubHeader from '@/common/SelectDatesHeader/DatesSubHeader'
 import React from 'react'
-import ShowSummeryInfos from './_components/ShowSummeryInfos'
+import OverviewSummeryView from './_components/OverviewSummeryView'
 
 const Overview = () => {
-  return (
-    <section className='flex flex-col'>
-       <DatesSubHeader />
-       <ShowSummeryInfos />
-    </section>
-  )
+  return <OverviewSummeryView />
 }
 
 export default Overview

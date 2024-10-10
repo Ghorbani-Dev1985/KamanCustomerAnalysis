@@ -1,4 +1,4 @@
-import { Button } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -19,7 +19,7 @@ const Register = () => {
        reset,
         formState: { errors },
       } = useForm<RegisterType>({ mode: "onChange" , resolver: yupResolver(RegisterValidationSchema)});
-      const {mutateAsync: mutateRegisterUser} = useMutation({mutationFn : RegisterUser})
+      const {isPending ,mutateAsync: mutateRegisterUser} = useMutation({mutationFn : RegisterUser})
       const RegisterHandler: SubmitHandler<RegisterType> = async (data) => {
         let formData = new FormData();
         formData.append("username", data.phone);
@@ -64,8 +64,10 @@ const Register = () => {
         />
         <TextField name="phone" type='tel' label="شماره موبایل " register={register} required={true} errors={errors} ltr icon={<HiMiniDevicePhoneMobile className='size-6 text-primary-700'/>}/>
         <TextField name="email" label=" ایمیل" register={register} required={true} errors={errors} ltr icon={<BiLogoGmail className='size-6 text-primary-700'/>}/>
-          <Button type="submit" fullWidth size="lg" color="primary">
-           ایجاد حساب کاربری
+          <Button type="submit" disabled={isPending && true} fullWidth size="lg" color="primary">
+          {
+            isPending ? <Spinner size='md' color='white'/> : " ایجاد حساب کاربری"
+          }
         </Button>
       </form>
     </div>

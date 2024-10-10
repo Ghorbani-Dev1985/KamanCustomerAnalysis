@@ -1,5 +1,5 @@
 "use client";
-import React, {useState } from "react";
+import React, {Dispatch, SetStateAction, useState } from "react";
 import {Button,Checkbox, Divider} from "@nextui-org/react";
 import useClickOutside from "hooks/useClickOutside";
 import persian from "react-date-object/calendars/persian";
@@ -13,9 +13,12 @@ import '../../../public/styles/datePickerStyle.css'
 import { useGetFactorInfo, useGetProductInfo } from "hooks/useGetInfo";
 import ChangeDateToIso from "@/utils/ChangeDateToIso";
 import toast from "react-hot-toast";
+import { FactorInfoType, ProductInfoType } from "@/types/infosType";
 
-
-const DatesSubHeader = () => {
+const DatesSubHeader = ({setGetFactorInfo} : {setGetFactorInfo : Dispatch<SetStateAction<{
+  date1: FactorInfoType,
+  percentage: ProductInfoType
+}>>}) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const datePickerRef = useClickOutside(() => setShowDatePicker(false));
   const [isEnterUserDate, setIsEnterUserDate] = useState(true);
@@ -30,28 +33,36 @@ const DatesSubHeader = () => {
   const {setCompareDatePeriod} = useDates()
   const {SplitDesiredDatePeriod} = useDates()
   const {SplitCompareDatePeriod} = useDates()
-  let GetInfoFormData = new FormData()
-  const {isPending : isPendingGetFactorInfo , mutateAsync : GetFactorInfo} = useGetFactorInfo()
+  const {mutateAsync : GetFactorInfo} = useGetFactorInfo()
   const {isPending : isPendingGetProductInfo , mutateAsync : GetProductInfo} = useGetProductInfo()
   const HandleGetInfo = async () => {
-    GetInfoFormData.append("start_date1", isEnterUserDate ? ChangeDateToIso(startUserDate) : ChangeDateToIso(SplitDesiredDatePeriod[0]))
-    GetInfoFormData.append("end_date2", isEnterUserDate ? ChangeDateToIso(endUserDate) : ChangeDateToIso(SplitDesiredDatePeriod[1]))
+    let formDataFactor = new FormData();
+    let formDataProduct = new FormData();
+
+    formDataFactor.append("start_date1", isEnterUserDate ? ChangeDateToIso(startUserDate) : ChangeDateToIso(SplitDesiredDatePeriod[0]))
+    formDataFactor.append("end_date1", isEnterUserDate ? ChangeDateToIso(endUserDate) : ChangeDateToIso(SplitDesiredDatePeriod[1]))
+    formDataProduct.append("start_date1", isEnterUserDate ? ChangeDateToIso(startUserDate) : ChangeDateToIso(SplitDesiredDatePeriod[0]))
+    formDataProduct.append("end_date1", isEnterUserDate ? ChangeDateToIso(endUserDate) : ChangeDateToIso(SplitDesiredDatePeriod[1]))
+    formDataProduct.append("export" , "0")
     if(isCompare){
-      GetInfoFormData.append("start_date2", isEnterUserDate ? ChangeDateToIso(startCompareUserDate) : ChangeDateToIso(SplitCompareDatePeriod[0]))
-      GetInfoFormData.append("end_date2", isEnterUserDate ? ChangeDateToIso(endCompareUserDate) : ChangeDateToIso(SplitCompareDatePeriod[1]))
+      formDataFactor.append("start_date2", isEnterUserDate ? ChangeDateToIso(startCompareUserDate) : ChangeDateToIso(SplitCompareDatePeriod[0]))
+      formDataFactor.append("end_date2", isEnterUserDate ? ChangeDateToIso(endCompareUserDate) : ChangeDateToIso(SplitCompareDatePeriod[1]))
     }
     try {
-     // const FactorInfo = await GetFactorInfo(GetInfoFormData)
-      const ProductInfo = await GetProductInfo(GetInfoFormData)
-      console.log( ProductInfo)
+      const [FactorInfo, ProductInfo] = await Promise.all([
+        GetFactorInfo(formDataFactor),
+        GetProductInfo(formDataProduct)
+      ]);
+      console.log(FactorInfo, ProductInfo)
+      if(!FactorInfo.error.hasError && !ProductInfo.error.hasError){
+        setGetFactorInfo({date1: FactorInfo.results.date1, percentage: FactorInfo.results.percentage})
+      }
       setShowDatePicker(false)
     } catch (error) {
        console.log(error)
        toast.error("خطا در دریافت اطلاعات")
     }
-   
-     
-  }
+  }  
   return (
     <section className="relative w-full flex-between bg-white h-20 mb-3 rounded-lg shadow-sm">
       <div className="flex-center h-full">
