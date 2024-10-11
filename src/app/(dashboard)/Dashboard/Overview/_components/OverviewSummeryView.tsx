@@ -6,7 +6,6 @@ import { FactorInfoType, ProductInfoType } from '@/types/infosType';
 
 const OverviewSummeryView = () => {
    const [getFactorInfo, setGetFactorInfo] = useState<{ date1: FactorInfoType; percentage: ProductInfoType }>({ date1: {} as FactorInfoType, percentage: {} as ProductInfoType })
-   console.log(getFactorInfo)
  return (
    <section className='flex flex-col'>
       <DatesSubHeader setGetFactorInfo={setGetFactorInfo}/>
