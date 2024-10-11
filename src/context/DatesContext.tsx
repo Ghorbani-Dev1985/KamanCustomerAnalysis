@@ -17,6 +17,8 @@ type DatesContextType<T> = {
   setCompareDatePeriod: Dispatch<React.SetStateAction<T>>;
   SplitDesiredDatePeriod: T;
   SplitCompareDatePeriod: T;
+  isEnterUserDate: boolean;
+  setIsEnterUserDate: Dispatch<React.SetStateAction<boolean>>;
 };
 const DatesContext = createContext<DatesContextType<any>>(undefined as any);
 
@@ -41,6 +43,7 @@ export const DatesProvider = ({ children }: { children: ReactNode }) => {
     new DateObject({ calendar: persian }),
     new DateObject({ calendar: persian }),
   ]);
+  const [isEnterUserDate, setIsEnterUserDate] = useState(true);
   const SplitDesiredDatePeriod = desiredDatePeriod.toString().split(",");
   const SplitCompareDatePeriod = compareDatePeriod.toString().split(",");
   return (
@@ -60,6 +63,8 @@ export const DatesProvider = ({ children }: { children: ReactNode }) => {
         setCompareDatePeriod,
         SplitDesiredDatePeriod,
         SplitCompareDatePeriod,
+        isEnterUserDate,
+        setIsEnterUserDate
       }}
     >
       {children}

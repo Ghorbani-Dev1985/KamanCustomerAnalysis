@@ -21,18 +21,10 @@ const DatesSubHeader = ({setGetFactorInfo} : {setGetFactorInfo : Dispatch<SetSta
 }>>}) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const datePickerRef = useClickOutside(() => setShowDatePicker(false));
-  const [isEnterUserDate, setIsEnterUserDate] = useState(true);
   const [isCompare, setIsCompare] = useState(false);
-  const {startUserDate} = useDates()
-  const {endUserDate} = useDates()
-  const {desiredDatePeriod} = useDates()
-  const {setDesiredDatePeriod} = useDates()
-  const {startCompareUserDate} = useDates()
-  const {endCompareUserDate} = useDates()
-  const {compareDatePeriod} = useDates()
-  const {setCompareDatePeriod} = useDates()
-  const {SplitDesiredDatePeriod} = useDates()
-  const {SplitCompareDatePeriod} = useDates()
+  const {startUserDate, endUserDate , desiredDatePeriod, setDesiredDatePeriod, startCompareUserDate , endCompareUserDate, compareDatePeriod
+    ,setCompareDatePeriod , SplitDesiredDatePeriod , SplitCompareDatePeriod , isEnterUserDate
+  } = useDates()
   const {mutateAsync : GetFactorInfo} = useGetFactorInfo()
   const {isPending : isPendingGetProductInfo , mutateAsync : GetProductInfo} = useGetProductInfo()
   const HandleGetInfo = async () => {
@@ -106,7 +98,7 @@ const DatesSubHeader = ({setGetFactorInfo} : {setGetFactorInfo : Dispatch<SetSta
                {/* Left Side Top */}
               <div className="h-1/2 border-r-4 border-r-primary overflow-hidden border-b border-b-gray-100 px-3 py-4">
                 <p className="my-3">انتخاب بازه زمانی</p>
-               <SelectDesiredDates isEnterUserDate={isEnterUserDate} setIsEnterUserDate={setIsEnterUserDate} />
+               <SelectDesiredDates />
               </div>
               {/* Left Side Bottom */}
               <div

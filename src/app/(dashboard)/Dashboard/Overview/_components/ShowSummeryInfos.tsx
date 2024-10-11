@@ -69,7 +69,7 @@ function ShowSummeryInfos({getFactorInfo} : {getFactorInfo : {date1: FactorInfoT
     });
   };
     return (
-    <section className='grid grid-cols-4 grid-rows-2 gap-5 my-3'>
+    <section className='grid grid-cols-4 grid-rows-2 gap-5 my-5'>
       {
         isPending ? 
         Array(8).fill(0).map((_, index) => (

@@ -7,15 +7,8 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { DateObject } from "react-multi-date-picker";
 
-function SelectDesiredDates({isEnterUserDate , setIsEnterUserDate} : {isEnterUserDate : boolean , setIsEnterUserDate : Dispatch<React.SetStateAction<boolean>>}) {
-   
-    const {startUserDate} = useDates()
-    const {setStartUserDate} = useDates()
-    const {endUserDate} = useDates()
-    const {setEndUserDate} = useDates()
-    const {desiredDatePeriod} = useDates()
-    const {setDesiredDatePeriod} = useDates()
-    const {SplitDesiredDatePeriod} = useDates()
+function SelectDesiredDates() {
+    const {startUserDate, setStartUserDate, endUserDate, setEndUserDate, setDesiredDatePeriod, SplitDesiredDatePeriod , isEnterUserDate , setIsEnterUserDate} = useDates()
     let startDesiredDatePeriod, endDesiredDatePeriod;
     const SelectDatePeriodHandler = (e: ChangeEvent<HTMLSelectElement>) => {
         const SelectId = e.target.value;
