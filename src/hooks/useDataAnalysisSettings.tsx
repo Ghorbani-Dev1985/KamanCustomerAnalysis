@@ -1,9 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { GetDataAnalysisSettings } from "services/DataAnalysisServics";
+import { GetBasicAnalysisSettings, UpdateDataAnalysisSettings } from "services/DataAnalysisServics";
 
 
-export const useDataAnalysisSettings = () =>
+export const useCustomerSegmentationSettings = () =>
     useQuery({
-      queryKey: ["getDataAnalysisSettings"],
-      queryFn: GetDataAnalysisSettings,
-    });33
+      queryKey: ["getUpdateDataAnalysisSettings"],
+      queryFn: UpdateDataAnalysisSettings,
+    });
+
+export const useBasicAnalysisSettings = () =>
+      useQuery({
+        queryKey: ["getBasicAnalysisSettings"],
+        queryFn: GetBasicAnalysisSettings,
+      });

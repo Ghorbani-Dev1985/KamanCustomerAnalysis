@@ -5,7 +5,6 @@ import { Radio, RadioGroup } from '@nextui-org/react'
 import React, { Dispatch, SetStateAction } from 'react'
 
 const SelectNumberPurchaseIndex = ({selectNumberPurchase , setSelectNumberPurchase} : {selectNumberPurchase : string , setSelectNumberPurchase : Dispatch<SetStateAction<string>>}) => {
-  console.log(selectNumberPurchase)
   return (
     <Fieldset title="انتخاب شاخص تعداد خرید ">
        <p>از این بخش می توانید بجای شاخص پیشفرض تعداد خرید مشتری (Frequency) شاخص‌های دیگری به نسبت کسب و کار خود برای محاسبه تحلیل RFM انتخاب کنید.</p>

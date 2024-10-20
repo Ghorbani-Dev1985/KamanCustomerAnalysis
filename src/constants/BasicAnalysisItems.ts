@@ -2,41 +2,49 @@ export const BasicAnalysisItems = [
  {
   id: 1,
   title: "دسته بندی‌ها",
-  inputName: 'categories',
+  selectName: "product_category_equal",
+  inputName: "product_category",
  },
  {
   id: 2,
   title: "محصولات",
-  inputName: 'products',
+  selectName: "product_name_equal",
+  inputName: "product_name",
  },
  {
   id: 3,
   title: "برند‌ها",
-  inputName: "brands",
+  selectName: "product_brand_equal",
+  inputName: "product_brand",
 },
 {
     id: 4,
-    title: "کانال جذب",
-    inputName: "attractionChannel",
+    title: " جنسیت",
+    selectName: "customer_gender_equal",
+    inputName: "customer_gender",
   },
   {
     id: 5,
     title: "مناطق جغرافیایی",
-    inputName: "geographicalAreas",
+    selectName: "city_equal",
+    inputName: "city",
   },
   {
     id: 6,
     title: " رده سنی",
-    inputName: "ageRange",
+    selectName: "age_equal",
+    inputName: "age",
   },
   {
     id: 7,
     title: "کانال خرید",
-    inputName: "purchaseChannel",
+    selectName: "sales_channel_equal",
+    inputName: "sales_channel",
   },
   {
     id: 8,
     title: " ایمیل",
+    selectName: "email_equal",
     inputName: "email",
   }
 ]

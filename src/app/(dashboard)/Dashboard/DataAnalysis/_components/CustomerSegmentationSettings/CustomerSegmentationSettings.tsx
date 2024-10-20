@@ -11,10 +11,10 @@ import ScoringMethod from './ScoringMethod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UpdateDataAnalysisSettings } from 'services/DataAnalysisServics';
 import toast from 'react-hot-toast';
-import { useDataAnalysisSettings } from 'hooks/useDataAnalysisSettings';
+import { useCustomerSegmentationSettings } from 'hooks/useDataAnalysisSettings';
 
 const CustomerSegmentationSettings = () => {
-  const {data: dataAnalysisSettings } = useDataAnalysisSettings()
+  const {data: dataAnalysisSettings } = useCustomerSegmentationSettings()
   const queryClient = useQueryClient(); 
   const [isOpenSingleAccordion, setIsOpenSingleAccordion] = useState(false)
   const [selectPurchaseAmount , setSelectPurchaseAmount] = useState("pure_sale")
@@ -22,7 +22,6 @@ const CustomerSegmentationSettings = () => {
   const [isRemoveOutliers , setIsRemoveOutliers] = useState(0)
   const [numCustomerCategories , setNumCustomerCategories] = useState(11)
   const [isScoringMethod , setIsScoringMethod] = useState(false)
-  console.log(dataAnalysisSettings && dataAnalysisSettings)
   useEffect(() => {
     if(dataAnalysisSettings){
       setIsRemoveOutliers(dataAnalysisSettings.results.outlayer)
@@ -31,7 +30,7 @@ const CustomerSegmentationSettings = () => {
       setSelectNumberPurchase(dataAnalysisSettings.results.frequncy_type)
     }
   },[dataAnalysisSettings])
-  const {isPending ,  mutateAsync: mutateUpdateDataAnalysisSettings } = useMutation({mutationFn: UpdateDataAnalysisSettings});
+  const {isPending ,  mutateAsync: mutateDataAnalysisSettings } = useMutation({mutationFn: UpdateDataAnalysisSettings});
   const CustomerSegmentationSettingsHandler = async(data : any) => {
     let formData = new FormData();
     formData.append("outlayer", isRemoveOutliers.toString());
@@ -51,15 +50,14 @@ const CustomerSegmentationSettings = () => {
     formData.append("recency_type", selectPurchaseAmount);
     formData.append("frequncy_type", selectNumberPurchase);
       try{
-        const {error} = await mutateUpdateDataAnalysisSettings(formData)
+        const {error} = await mutateDataAnalysisSettings(formData)
         if(!error.hasError){
           toast.success("تنظیمات با موفقیت ثبت شد")
           console.log()
-          queryClient.invalidateQueries({ queryKey: ["getDataAnalysisSettings"] });
+          queryClient.invalidateQueries({ queryKey: ["getUpdateDataAnalysisSettings"] });
         }
       }catch (error) {
         toast.error("خطایی رخ داده است")
-        console.log(error)
       }
   }
   return (
