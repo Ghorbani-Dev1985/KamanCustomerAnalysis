@@ -17,24 +17,25 @@ const CustomerSegmentationSettings = () => {
   const {data: dataAnalysisSettings } = useDataAnalysisSettings()
   const queryClient = useQueryClient(); 
   const [isOpenSingleAccordion, setIsOpenSingleAccordion] = useState(false)
-  const [selectPurchaseAmount , setSelectPurchaseAmount] = useState("grossSales")
-  const [selectNumberPurchase , setSelectNumberPurchase] = useState("numberSalesInvoices")
+  const [selectPurchaseAmount , setSelectPurchaseAmount] = useState("pure_sale")
+  const [selectNumberPurchase , setSelectNumberPurchase] = useState("sale_factor_count")
   const [isRemoveOutliers , setIsRemoveOutliers] = useState(0)
   const [numCustomerCategories , setNumCustomerCategories] = useState(11)
-  const  [isScoringMethod , setIsScoringMethod] = useState(false)
+  const [isScoringMethod , setIsScoringMethod] = useState(false)
   console.log(dataAnalysisSettings && dataAnalysisSettings)
   useEffect(() => {
     if(dataAnalysisSettings){
       setIsRemoveOutliers(dataAnalysisSettings.results.outlayer)
       setNumCustomerCategories(dataAnalysisSettings.results.segment)
+      setSelectPurchaseAmount(dataAnalysisSettings.results.recency_type)
+      setSelectNumberPurchase(dataAnalysisSettings.results.frequncy_type)
     }
   },[dataAnalysisSettings])
   const {isPending ,  mutateAsync: mutateUpdateDataAnalysisSettings } = useMutation({mutationFn: UpdateDataAnalysisSettings});
   const CustomerSegmentationSettingsHandler = async(data : any) => {
-   
     let formData = new FormData();
     formData.append("outlayer", isRemoveOutliers.toString());
-    formData.append("segments", numCustomerCategories.toString());
+    formData.append("segment", numCustomerCategories.toString());
     formData.append("recency1", data.recency20);
     formData.append("recency2", data.recency40);
     formData.append("recency3", data.recency60);
@@ -47,14 +48,16 @@ const CustomerSegmentationSettings = () => {
     formData.append("monetary2", data.monetary40);
     formData.append("monetary3", data.monetary60);
     formData.append("monetary4", data.monetary80);
-      try {
+    formData.append("recency_type", selectPurchaseAmount);
+    formData.append("frequncy_type", selectNumberPurchase);
+      try{
         const {error} = await mutateUpdateDataAnalysisSettings(formData)
         if(!error.hasError){
           toast.success("تنظیمات با موفقیت ثبت شد")
           console.log()
           queryClient.invalidateQueries({ queryKey: ["getDataAnalysisSettings"] });
         }
-      } catch (error) {
+      }catch (error) {
         toast.error("خطایی رخ داده است")
         console.log(error)
       }
@@ -64,14 +67,14 @@ const CustomerSegmentationSettings = () => {
   isOpenSingleAccordion={isOpenSingleAccordion} setIsOpenSingleAccordion={setIsOpenSingleAccordion}
   title="تنظیمات بخش بندی مشتریان(RFM)"
   subTitle="(نمای کلی، بخش‌بندی مشتریان، جابجایی مشتریان، ارزش طول عمر مشتریان، تحلیل سبد مشتریان)">
-  <SelectPurchaseAmountIndex setSelectPurchaseAmount={setSelectPurchaseAmount}/>
-  <SelectNumberPurchaseIndex setSelectNumberPurchase={setSelectNumberPurchase}/>
+  <SelectPurchaseAmountIndex selectPurchaseAmount={selectPurchaseAmount} setSelectPurchaseAmount={setSelectPurchaseAmount}/>
+  <SelectNumberPurchaseIndex selectNumberPurchase={selectNumberPurchase} setSelectNumberPurchase={setSelectNumberPurchase}/>
   <RemoveOutliers isRemoveOutliers={isRemoveOutliers} setIsRemoveOutliers={setIsRemoveOutliers}/>
   <ChooseNumberCustomerCategories numCustomerCategories={numCustomerCategories} setNumCustomerCategories={setNumCustomerCategories}/>
   <ScoringMethod handler={CustomerSegmentationSettingsHandler} setIsScoringMethod={setIsScoringMethod} dataAnalysisSettings={dataAnalysisSettings}>
-  <div className='w-full flex justify-end items-center gap-x-2'>
+  <div className='w-full flex justify-end items-center gap-x-2 my-3'>
     <Button color="primary" variant="bordered" onPress={() => setIsOpenSingleAccordion(false)}>انصراف </Button>
-     <Button type='submit' onClick={CustomerSegmentationSettingsHandler} color="primary" disabled={(selectPurchaseAmount === "grossSales" && selectNumberPurchase === "numberSalesInvoices" && isRemoveOutliers == dataAnalysisSettings?.results?.outlayer && numCustomerCategories == dataAnalysisSettings?.results?.segment && !isScoringMethod && !isPending) && true} startContent={<LiaSave className='size-4'/>}>
+     <Button type='submit' onClick={CustomerSegmentationSettingsHandler} color="primary" disabled={(selectPurchaseAmount === dataAnalysisSettings?.results?.recency_type && selectNumberPurchase === dataAnalysisSettings?.results?.frequncy_type && isRemoveOutliers == dataAnalysisSettings?.results?.outlayer && numCustomerCategories == dataAnalysisSettings?.results?.segment && !isScoringMethod && !isPending) && true} startContent={<LiaSave className='size-4'/>}>
        {
         isPending ? <Spinner color='white' size='md'/> : <span>ذخیره تنظیمات</span> 
        }

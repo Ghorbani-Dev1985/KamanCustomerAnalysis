@@ -5,7 +5,6 @@ import { useForm, UseFormRegister } from 'react-hook-form'
 import { HiMiniChevronLeft, HiMiniMinus } from 'react-icons/hi2'
 import { MdOutlinePercent } from 'react-icons/md'
 const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSettings} : {children : ReactNode , handler : (data : any) => void , setIsScoringMethod : Dispatch<SetStateAction<boolean>> , dataAnalysisSettings : any}) => {
-  console.log(dataAnalysisSettings?.results.recency1)
   const {register,handleSubmit , getValues , watch, setValue} = useForm({
     defaultValues: {
       recency100: 100,
