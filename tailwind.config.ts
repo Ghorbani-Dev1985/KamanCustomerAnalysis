@@ -40,8 +40,8 @@ const config : Config = {
            secondary: '#c94040',
            success: 'rgb(0 , 192 , 115)',
            warning: {
-            DEFAULT: "#404040",
-            foreground: "#d4d4d4",
+            DEFAULT: "#1e293b",
+            foreground: "#ffffff",
         },
            error: 'rgb(255,71 , 87)',
            danger: '#f43f5e'
@@ -122,8 +122,8 @@ const config : Config = {
           secondary: '#c94040',
           success: 'rgb(0 , 192 , 115)',
           warning: {
-              DEFAULT: "#404040",
-              foreground: "#d4d4d4",
+              DEFAULT: "#1e293b",
+              foreground: "#ffffff",
           },
           error: 'rgb(255,71 , 87)',
           danger: '#f43f5e'

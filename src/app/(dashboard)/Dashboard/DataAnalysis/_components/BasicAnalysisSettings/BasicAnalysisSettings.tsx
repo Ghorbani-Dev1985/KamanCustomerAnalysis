@@ -10,7 +10,7 @@ const BasicAnalysisSettings = () => {
     isOpenSingleAccordion={isOpenSingleAccordion} setIsOpenSingleAccordion={setIsOpenSingleAccordion}
       title="تنظیمات پایه تحلیل"
       subTitle="(نمای کلی، بخش‌بندی مشتریان، جابجایی مشتریان، ارزش طول عمر مشتریان، فاصله خرید مشتریان، خوشه‌بندی مشتریان، تحلیل سبد مشتریان)">
-      <BasisAnalysis />
+      <BasisAnalysis setIsOpenSingleAccordion={setIsOpenSingleAccordion}/>
     </SingleAccordion>
   );
 };

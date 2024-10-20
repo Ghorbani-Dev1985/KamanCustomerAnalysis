@@ -7,7 +7,7 @@ import SubHeader from '@/common/SelectDatesHeader/SubHeader'
 const DataAnalysisView = () => {
   return (
     <>
-       <SubHeader></SubHeader>
+      <SubHeader></SubHeader>
       <TimeFrameSettings />
       <BasicAnalysisSettings />
       <CustomerSegmentationSettings />

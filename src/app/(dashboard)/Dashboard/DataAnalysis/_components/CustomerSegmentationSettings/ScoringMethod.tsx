@@ -5,7 +5,6 @@ import { useForm, UseFormRegister } from 'react-hook-form'
 import { HiMiniChevronLeft, HiMiniMinus } from 'react-icons/hi2'
 import { MdOutlinePercent } from 'react-icons/md'
 const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSettings} : {children : ReactNode , handler : (data : any) => void , setIsScoringMethod : Dispatch<SetStateAction<boolean>> , dataAnalysisSettings : any}) => {
-  console.log(dataAnalysisSettings?.results.recency1)
   const {register,handleSubmit , getValues , watch, setValue} = useForm({
     defaultValues: {
       recency100: 100,
@@ -43,12 +42,25 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
       setValue("monetary60", dataAnalysisSettings?.results.monetary3)
       setValue("monetary80", dataAnalysisSettings?.results.monetary4)
     }
-  },[dataAnalysisSettings, setValue])
-  if(watch("recency80") != dataAnalysisSettings?.results.recency4 || watch("recency60") != dataAnalysisSettings?.results.recency3 || watch("recency40") != dataAnalysisSettings?.results.recency2 || watch("recency20") != dataAnalysisSettings?.results.recency1 || watch("frequency80") != dataAnalysisSettings?.results.frequency4 || watch("frequency60") != dataAnalysisSettings?.results.frequency3 || watch("frequency40") != dataAnalysisSettings?.results.frequency2 || watch("frequency20") != dataAnalysisSettings?.results.frequency1 || watch("monetary80") != dataAnalysisSettings?.results.monetary4 || watch("monetary60") != dataAnalysisSettings?.results.monetary3 || watch("monetary40") != dataAnalysisSettings?.results.monetary2 || watch("monetary20") != dataAnalysisSettings?.results.monetary1){
-    setIsScoringMethod(true)
-  }else{
-    setIsScoringMethod(false)
-  }
+    if (
+      watch("recency80") !== dataAnalysisSettings?.results?.recency4 ||
+      watch("recency60") !== dataAnalysisSettings?.results?.recency3 ||
+      watch("recency40") !== dataAnalysisSettings?.results?.recency2 ||
+      watch("recency20") !== dataAnalysisSettings?.results?.recency1 ||
+      watch("frequency80") !== dataAnalysisSettings?.results?.frequency4 ||
+      watch("frequency60") !== dataAnalysisSettings?.results?.frequency3 ||
+      watch("frequency40") !== dataAnalysisSettings?.results?.frequency2 ||
+      watch("frequency20") !== dataAnalysisSettings?.results?.frequency1 ||
+      watch("monetary80") !== dataAnalysisSettings?.results?.monetary4 ||
+      watch("monetary60") !== dataAnalysisSettings?.results?.monetary3 ||
+      watch("monetary40") !== dataAnalysisSettings?.results?.monetary2 ||
+      watch("monetary20") !== dataAnalysisSettings?.results?.monetary1
+    ) {
+      setIsScoringMethod(true)
+    } else {
+      setIsScoringMethod(false)
+    }
+  },[dataAnalysisSettings, setValue , setIsScoringMethod , watch])
   return (
     <Fieldset title="شیوه امتیازدهی">
        <p>در این قسمت می توانید بازه‌های پیش‌فرض امتیازدهی Frequency, Recency و Monetary را که در محاسبه نهایی تحلیل RFM استفاده می شوند را به دلخواه خود، تغییر دهید.</p>

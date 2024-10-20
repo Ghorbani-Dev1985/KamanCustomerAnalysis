@@ -39,7 +39,7 @@ const DateEntryView = () => {
           <div className='flex-center gap-x-1'>
           <p> آخرین زمان ورود داده :</p>
           {
-             !isPendingUploadedFile &&
+             !isPendingUploadedFile && uploadedFilesArray[0] &&
           <p className='dir-ltr'>{DateChangeToPersian(uploadedFilesArray[0]?.time)}</p>
           }
           </div>
