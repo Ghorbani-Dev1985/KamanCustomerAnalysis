@@ -9,12 +9,13 @@ import { Button, Spinner } from '@nextui-org/react';
 import { LiaSave } from 'react-icons/lia';
 import ScoringMethod from './ScoringMethod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UpdateDataAnalysisSettings } from 'services/DataAnalysisServics';
 import toast from 'react-hot-toast';
 import { useCustomerSegmentationSettings } from 'hooks/useDataAnalysisSettings';
+import { UpdateDataAnalysisSettings } from 'services/DataAnalysisConfigServices';
 
 const CustomerSegmentationSettings = () => {
-  const {data: dataAnalysisSettings } = useCustomerSegmentationSettings()
+  const { data } = useCustomerSegmentationSettings()
+  const {SegmentationSettings} = data || {}
   const queryClient = useQueryClient(); 
   const [isOpenSingleAccordion, setIsOpenSingleAccordion] = useState(false)
   const [selectPurchaseAmount , setSelectPurchaseAmount] = useState("pure_sale")
@@ -23,13 +24,13 @@ const CustomerSegmentationSettings = () => {
   const [numCustomerCategories , setNumCustomerCategories] = useState(11)
   const [isScoringMethod , setIsScoringMethod] = useState(false)
   useEffect(() => {
-    if(dataAnalysisSettings){
-      setIsRemoveOutliers(dataAnalysisSettings.results.outlayer)
-      setNumCustomerCategories(dataAnalysisSettings.results.segment)
-      setSelectPurchaseAmount(dataAnalysisSettings.results.recency_type)
-      setSelectNumberPurchase(dataAnalysisSettings.results.frequncy_type)
+    if(SegmentationSettings){
+      setIsRemoveOutliers(SegmentationSettings.results.outlayer)
+      setNumCustomerCategories(SegmentationSettings.results.segment)
+      setSelectPurchaseAmount(SegmentationSettings.results.recency_type)
+      setSelectNumberPurchase(SegmentationSettings.results.frequncy_type)
     }
-  },[dataAnalysisSettings])
+  },[SegmentationSettings])
   const {isPending ,  mutateAsync: mutateDataAnalysisSettings } = useMutation({mutationFn: UpdateDataAnalysisSettings});
   const CustomerSegmentationSettingsHandler = async(data : any) => {
     let formData = new FormData();
@@ -69,15 +70,16 @@ const CustomerSegmentationSettings = () => {
   <SelectNumberPurchaseIndex selectNumberPurchase={selectNumberPurchase} setSelectNumberPurchase={setSelectNumberPurchase}/>
   <RemoveOutliers isRemoveOutliers={isRemoveOutliers} setIsRemoveOutliers={setIsRemoveOutliers}/>
   <ChooseNumberCustomerCategories numCustomerCategories={numCustomerCategories} setNumCustomerCategories={setNumCustomerCategories}/>
-  <ScoringMethod handler={CustomerSegmentationSettingsHandler} setIsScoringMethod={setIsScoringMethod} dataAnalysisSettings={dataAnalysisSettings}>
+  {/* Because use of useForm in  ScoringMethod component */}
+  <ScoringMethod handler={CustomerSegmentationSettingsHandler} setIsScoringMethod={setIsScoringMethod}>
   <div className='w-full flex justify-end items-center gap-x-2 my-3'>
     <Button color="primary" variant="bordered" onPress={() => setIsOpenSingleAccordion(false)}>انصراف </Button>
-     <Button type='submit' onClick={CustomerSegmentationSettingsHandler} color="primary" disabled={(selectPurchaseAmount === dataAnalysisSettings?.results?.recency_type && selectNumberPurchase === dataAnalysisSettings?.results?.frequncy_type && isRemoveOutliers == dataAnalysisSettings?.results?.outlayer && numCustomerCategories == dataAnalysisSettings?.results?.segment && !isScoringMethod && !isPending) && true} startContent={<LiaSave className='size-4'/>}>
+     <Button type='submit' onClick={CustomerSegmentationSettingsHandler} color="primary" className='min-w-24' disabled={(selectPurchaseAmount === SegmentationSettings?.results?.recency_type && selectNumberPurchase === SegmentationSettings?.results?.frequncy_type && isRemoveOutliers == SegmentationSettings?.results?.outlayer && numCustomerCategories == SegmentationSettings?.results?.segment && !isScoringMethod && !isPending) && true} startContent={<LiaSave className='size-4'/>}>
        {
-        isPending ? <Spinner color='white' size='md'/> : <span>ذخیره تنظیمات</span> 
+        isPending ? <Spinner color='white' size='md'/> : <span>ذخیره تغییرات</span>
        }
       </Button>
-    </div>
+    </div> 
     </ScoringMethod>
 </SingleAccordion>
   )

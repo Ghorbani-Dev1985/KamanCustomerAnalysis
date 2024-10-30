@@ -47,7 +47,7 @@ export const NumberPurchaseIndexRadioItems = [
   {
     id: 1,
     label: " تعداد فاکتورهای فروش ",
-    value: "sale_factor_count",
+    value: "factor_count",
     tooltip: " مجموع تعداد فاکتورهای فروش",
   },
   {
@@ -70,9 +70,9 @@ export const NumberPurchaseIndexRadioItems = [
   },
   {
     id: 5,
-    label: "تنوع محصولات مشتری",
-    value: "varietyCustomerProducts",  // unavailable in api doc
-    tooltip: " مجموع تنوع محصولات مشتری",
+    label: " تعداد فاکتورهای مرجوعی",
+    value: "rejected_factor_count", 
+    tooltip: " مجموع تعداد فاکتورهای مرجوعی",
   },
   {
     id: 6,

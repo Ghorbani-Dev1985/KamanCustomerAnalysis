@@ -33,8 +33,9 @@ const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
       await StoreTokenInCookie(userInfo.access_token , userInfo.refresh_token)
       }
     }catch (error: any) {
-      if(error.status === 401){
+      if(error?.status === 401){
         toast.error("اطلاعات وارد شده صحیح نمی باشد")
+        return; // Add return to prevent form submission on 401
       }else{
         toast.error("خطایی رخ داده است")
       }
@@ -74,6 +75,5 @@ const LoginWithEmail = ({setStep} : {setStep: (step: number) => void}) => {
       </div>
     </>
   );
-};
-
+}
 export default LoginWithEmail;

@@ -7,7 +7,8 @@ import { useBasicAnalysisSettings } from 'hooks/useDataAnalysisSettings';
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import toast from 'react-hot-toast';
 import { LiaSave } from 'react-icons/lia';
-import { UpdateDataAnalysisSettings } from 'services/DataAnalysisServics';
+import { UpdateDataAnalysisSettings } from 'services/DataAnalysisConfigServices';
+
 
 const BasisAnalysis = ({setIsOpenSingleAccordion} : {setIsOpenSingleAccordion: Dispatch<SetStateAction<boolean>>}) => {
       const {data: dataBasicAnalysisSettings} = useBasicAnalysisSettings()
@@ -87,12 +88,12 @@ const BasisAnalysis = ({setIsOpenSingleAccordion} : {setIsOpenSingleAccordion: D
        }
          </Accordion>
       </Fieldset>
-      <div className='w-full flex justify-end items-center gap-x-2'>
+      {/* <div className='w-full flex justify-end items-center gap-x-2'>
      <Button color="primary" variant="bordered" onPress={() => setIsOpenSingleAccordion(false)}>انصراف </Button>
       <Button color="primary" 
     //  disabled={(selectTimePeriod === "365" && selectComparisonTimePeriod === "none") && true} 
       startContent={<LiaSave className='size-4'/>} onPress={BasisAnalysisSettingsHandler}> ذخیره تنظیمات </Button>
-     </div>
+     </div> */}
        </>
    )
 }

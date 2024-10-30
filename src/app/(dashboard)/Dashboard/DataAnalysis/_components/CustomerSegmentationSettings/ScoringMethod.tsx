@@ -1,10 +1,15 @@
-import React, { Dispatch, ReactNode, SetStateAction, useEffect } from 'react'
+import React, { Dispatch, FocusEvent, ReactNode, SetStateAction, useEffect } from 'react'
 import Fieldset from '@/common/Fieldset'
 import { Accordion, AccordionItem} from '@nextui-org/react'
 import { useForm, UseFormRegister } from 'react-hook-form'
 import { HiMiniChevronLeft, HiMiniMinus } from 'react-icons/hi2'
 import { MdOutlinePercent } from 'react-icons/md'
-const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSettings} : {children : ReactNode , handler : (data : any) => void , setIsScoringMethod : Dispatch<SetStateAction<boolean>> , dataAnalysisSettings : any}) => {
+import toast from 'react-hot-toast'
+import { useCustomerSegmentationSettings } from 'hooks/useDataAnalysisSettings'
+const ScoringMethod = ({children , handler , setIsScoringMethod } : {children : ReactNode , handler : (data : any) => void , setIsScoringMethod : Dispatch<SetStateAction<boolean>>}) => {
+  const { data } = useCustomerSegmentationSettings()
+  const {SegmentationSettings , ScoringMethodScore} = data || {}
+  console.log(ScoringMethodScore , SegmentationSettings)
   const {register,handleSubmit , getValues , watch, setValue} = useForm({
     defaultValues: {
       recency100: 100,
@@ -28,40 +33,46 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
     }
   });
   useEffect(() => {
-    if(dataAnalysisSettings){
-      setValue("recency20", dataAnalysisSettings?.results.recency1)
-      setValue("recency40", dataAnalysisSettings?.results.recency2)
-      setValue("recency60", dataAnalysisSettings?.results.recency3)
-      setValue("recency80", dataAnalysisSettings?.results.recency4)
-      setValue("frequency20", dataAnalysisSettings?.results.frequency1)
-      setValue("frequency40", dataAnalysisSettings?.results.frequency2)
-      setValue("frequency60", dataAnalysisSettings?.results.frequency3)
-      setValue("frequency80", dataAnalysisSettings?.results.frequency4)
-      setValue("monetary20", dataAnalysisSettings?.results.monetary1)
-      setValue("monetary40", dataAnalysisSettings?.results.monetary2)
-      setValue("monetary60", dataAnalysisSettings?.results.monetary3)
-      setValue("monetary80", dataAnalysisSettings?.results.monetary4)
+    if(SegmentationSettings){
+      setValue("recency20", SegmentationSettings?.results.recency1)
+      setValue("recency40", SegmentationSettings?.results.recency2)
+      setValue("recency60", SegmentationSettings?.results.recency3)
+      setValue("recency80", SegmentationSettings?.results.recency4)
+      setValue("frequency20", SegmentationSettings?.results.frequency1)
+      setValue("frequency40", SegmentationSettings?.results.frequency2)
+      setValue("frequency60", SegmentationSettings?.results.frequency3)
+      setValue("frequency80", SegmentationSettings?.results.frequency4)
+      setValue("monetary20", SegmentationSettings?.results.monetary1)
+      setValue("monetary40", SegmentationSettings?.results.monetary2)
+      setValue("monetary60", SegmentationSettings?.results.monetary3)
+      setValue("monetary80", SegmentationSettings?.results.monetary4)
     }
-    if (
-      watch("recency80") !== dataAnalysisSettings?.results?.recency4 ||
-      watch("recency60") !== dataAnalysisSettings?.results?.recency3 ||
-      watch("recency40") !== dataAnalysisSettings?.results?.recency2 ||
-      watch("recency20") !== dataAnalysisSettings?.results?.recency1 ||
-      watch("frequency80") !== dataAnalysisSettings?.results?.frequency4 ||
-      watch("frequency60") !== dataAnalysisSettings?.results?.frequency3 ||
-      watch("frequency40") !== dataAnalysisSettings?.results?.frequency2 ||
-      watch("frequency20") !== dataAnalysisSettings?.results?.frequency1 ||
-      watch("monetary80") !== dataAnalysisSettings?.results?.monetary4 ||
-      watch("monetary60") !== dataAnalysisSettings?.results?.monetary3 ||
-      watch("monetary40") !== dataAnalysisSettings?.results?.monetary2 ||
-      watch("monetary20") !== dataAnalysisSettings?.results?.monetary1
-    ) {
-      setIsScoringMethod(true)
-    } else {
-      setIsScoringMethod(false)
-    }
-  },[dataAnalysisSettings, setValue , setIsScoringMethod , watch])
-  return (
+  },[SegmentationSettings, setValue])
+
+  useEffect(() => {
+    const subscription = watch((value) => {
+      if (
+        value.recency80 !== SegmentationSettings?.results?.recency4 ||
+        value.recency60 !== SegmentationSettings?.results?.recency3 ||
+        value.recency40 !== SegmentationSettings?.results?.recency2 ||
+        value.recency20 !== SegmentationSettings?.results?.recency1 ||
+        value.frequency80 !== SegmentationSettings?.results?.frequency4 ||
+        value.frequency60 !== SegmentationSettings?.results?.frequency3 ||
+        value.frequency40 !== SegmentationSettings?.results?.frequency2 ||
+        value.frequency20 !== SegmentationSettings?.results?.frequency1 ||
+        value.monetary80 !== SegmentationSettings?.results?.monetary4 ||
+        value.monetary60 !== SegmentationSettings?.results?.monetary3 ||
+        value.monetary40 !== SegmentationSettings?.results?.monetary2 ||
+        value.monetary20 !== SegmentationSettings?.results?.monetary1
+      ) {
+        setIsScoringMethod(true)
+      }else{
+        setIsScoringMethod(false)
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [watch, SegmentationSettings, setIsScoringMethod])  
+   return (
     <Fieldset title="شیوه امتیازدهی">
        <p>در این قسمت می توانید بازه‌های پیش‌فرض امتیازدهی Frequency, Recency و Monetary را که در محاسبه نهایی تحلیل RFM استفاده می شوند را به دلخواه خود، تغییر دهید.</p>
          <form onSubmit={handleSubmit(handler)}>
@@ -69,7 +80,7 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
        <AccordionItem key="r" aria-label="Recency (R)" title="Recency (R)" subtitle="شیوه امتیازدهی تازگی مشتری" classNames={{base: "shadow-sm border px-0 overflow-hidden my-2" , heading : "px-1 bg-gray-100 rtl:data-[open=true]:border-b", title : "text-zinc-700 text-base" , content : "px-2 py-10" , indicator : "rtl:-rotate-90 rtl:data-[open=true]:rotate-90"}}>
          <p className='mb-5'>در این قسمت می توانید بازه تقسیم‌بندی (شاخص تازگی خرید) مشتریان را به دلخواه خود و متناسب با نیاز، تغییر دهید</p>
          <div className='flex-center gap-x-2.5'>
-         <ScoringMethodInput register={register} name='recency100' value={100}/>
+         <ScoringMethodInput register={register} name='recency100' value={100} disabled/>
          <ArrowLine />
          <ScoringMethodInput register={register} name='recency80' value={80}/>
          <ArrowLine />
@@ -79,7 +90,7 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
          <ArrowLine />
          <ScoringMethodInput register={register} name='recency20' value={20}/>
          <ArrowLine />
-         <ScoringMethodInput register={register} name='recency0' value={0}/>
+         <ScoringMethodInput register={register} name='recency0' value={0} disabled/>
          </div>
          <p className='my-2'> جدول امتیازات مشتریان بر اساس مقادیری که در بالا مشخص کرده‌اید به شکل زیر خواهد بود:</p>
          <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 my-4'>
@@ -93,7 +104,7 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
         <AccordionItem key="f" aria-label="Frequency (F)" title="Frequency (F)" subtitle="شیوه امتیازدهی میانگین سفارشات مشتری" classNames={{base: "shadow-sm border px-0 overflow-hidden my-2" , heading : "px-1 bg-gray-100 rtl:data-[open=true]:border-b", title : "text-zinc-700 text-base" , content : "px-2 py-10" , indicator : "rtl:-rotate-90 rtl:data-[open=true]:rotate-90"}}>
         <p>در این قسمت می توانید بازه تقسیم‌بندی (شاخص تعداد خرید) مشتریان را به دلخواه خود و متناسب با نیاز، تغییر دهید</p>
         <div className='flex-center gap-x-2.5'>
-         <ScoringMethodInput register={register} name='frequency100' value={100}/>
+         <ScoringMethodInput register={register} name='frequency100' value={100} disabled/>
          <ArrowLine />
          <ScoringMethodInput register={register} name='frequency80' value={80}/>
          <ArrowLine />
@@ -103,7 +114,7 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
          <ArrowLine />
          <ScoringMethodInput register={register} name='frequency20' value={20}/>
          <ArrowLine />
-         <ScoringMethodInput register={register} name='frequency0' value={0}/>
+         <ScoringMethodInput register={register} name='frequency0' value={0} disabled/>
          </div>
          <p className='my-2'> جدول امتیازات مشتریان بر اساس مقادیری که در بالا مشخص کرده‌اید به شکل زیر خواهد بود:</p>
          <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 my-4'>
@@ -117,7 +128,7 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
         <AccordionItem key="m" aria-label="Monetary (M)" title="Monetary (M)" subtitle="شیوه امتیازدهی میانگین درآمد مشتری" classNames={{base: "shadow-sm border px-0 overflow-hidden my-2" , heading : "px-1 bg-gray-100 rtl:data-[open=true]:border-b", title : "text-zinc-700 text-base" , content : "px-2 py-10" , indicator : "rtl:-rotate-90 rtl:data-[open=true]:rotate-90"}}>
         <p>در این قسمت می توانید بازه تقسیم‌بندی (شاخص مبلغ خرید) مشتریان را به دلخواه خود و متناسب با نیاز، تغییر دهید</p>
         <div className='flex-center gap-x-2.5'>
-         <ScoringMethodInput register={register} name='monetary100' value={100}/>
+         <ScoringMethodInput register={register} name='monetary100' value={100} disabled/>
          <ArrowLine />
          <ScoringMethodInput register={register} name='monetary80' value={80}/>
          <ArrowLine />
@@ -127,7 +138,7 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
          <ArrowLine />
          <ScoringMethodInput register={register} name='monetary20' value={20}/>
          <ArrowLine />
-         <ScoringMethodInput register={register} name='monetary0' value={0}/>
+         <ScoringMethodInput register={register} name='monetary0' value={0} disabled/>
          </div>
          <p className='my-2'> جدول امتیازات مشتریان بر اساس مقادیری که در بالا مشخص کرده‌اید به شکل زیر خواهد بود:</p>
          <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 my-4'>
@@ -148,17 +159,32 @@ const ScoringMethod = ({children , handler , setIsScoringMethod , dataAnalysisSe
 export default ScoringMethod
 
 type FieldValues = any
-export const ScoringMethodInput = ({register, name , value } : {register: UseFormRegister<FieldValues>, name : string , value : number}) => {
-  return (
-    <div className="relative">
-           <input {...register(name)}  type="number" min={0} max={100} className="bg-gray-50 border outline-none border-gray-300 text-zinc-700
-           rounded-lg focus:border-primary block lg:max-w-20 xl:max-w-28 text-center ps-10 p-2.5"
-            placeholder={value.toString()} />
-         <div className="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
-            <MdOutlinePercent className='size-4'/>
-            </div>
-           </div>
-  )
+export const ScoringMethodInput = ({register, name, value , disabled} : {register: UseFormRegister<FieldValues>, name : string, value : number , disabled?: boolean}) => {
+   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+     const inputValue = Number(e.target.value)
+     if (inputValue < 0 || inputValue > 100 || isNaN(inputValue) || !inputValue) {
+       e.target.value = value.toString()
+       toast.error('مقدار باید بین 0 تا 100 باشد')
+     }
+   }
+   return (
+     <div className="relative">
+            <input 
+              {...register(name)}  
+              type="number" 
+              min={0} 
+              max={100} 
+              onBlur={handleBlur}
+              disabled={disabled && true}
+              className="bg-gray-50 border disabled:select-none disabled:opacity-50 outline-none border-gray-300 text-zinc-700
+              rounded-lg focus:border-primary block lg:max-w-20 xl:max-w-28 text-center ps-10 p-2.5"
+              placeholder={value.toString()} 
+            />
+          <div className="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
+             <MdOutlinePercent className={`${disabled && "opacity-50"} size-4`}/>
+          </div>
+     </div>
+   )
 }
 export const ArrowLine = () => {
   return(

@@ -7,7 +7,13 @@ export async function GetCustomerSegmentationSettings(){
             Authorization : `Bearer ${token}`
         }}).then(({data}) => data)
 }
-
+export async function GetScoringMethodScore(){
+    const token = await GetAccessTokenFromCookie()
+    return Http.get("/get_score_update_config/" , {
+        headers : {
+            Authorization : `Bearer ${token}`
+        }}).then(({data}) => data)
+}
 export async function GetBasicAnalysisSettings(){
     const token = await GetAccessTokenFromCookie()
     return Http.get("/get_display_config/" , {
