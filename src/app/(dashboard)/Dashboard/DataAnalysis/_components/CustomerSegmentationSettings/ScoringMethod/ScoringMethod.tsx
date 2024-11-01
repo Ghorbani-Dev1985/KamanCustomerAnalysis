@@ -7,7 +7,6 @@ import { useCustomerSegmentationSettings } from 'hooks/useDataAnalysisSettings'
 import Recency from './Recency'
 import Frequency from './Frequency';
 import Monetary from './Monetary';
-
 const ScoringMethod = ({children, handler, setIsScoringMethod}: {
   children: ReactNode;
   handler: (data: any) => void;
@@ -15,51 +14,50 @@ const ScoringMethod = ({children, handler, setIsScoringMethod}: {
 }) => {
   const { data } = useCustomerSegmentationSettings();
   const { SegmentationSettings } = data || {};
-
   const defaultScores = {
-    recency: [100, 80, 60, 40, 20, 0],
-    frequency: [100, 80, 60, 40, 20, 0],
-    monetary: [100, 80, 60, 40, 20, 0]
+    recency: [80, 60, 40, 20],
+    frequency: [80, 60, 40, 20],
+    monetary: [80, 60, 40, 20]
   };
-
-  const { register, handleSubmit, getValues, watch, setValue } = useForm({
+  const { register, handleSubmit, getValues, watch, setValue , control } = useForm({
     defaultValues: Object.entries(defaultScores).reduce((acc: Record<string, number>, [key, values]) => {
-      values.forEach((value, index) => {
-        acc[`${key}${value}`] = value;
-      });
+      if (key === 'recency') {
+        values.forEach((value, index) => {
+          acc[`${key}${index + 1}`] = value;
+        });
+      } else {
+        values.forEach((_, index) => {
+          acc[`${key}${index + 1}`] = values[index];
+        });
+      }
       return acc;
     }, {})
   });
-
   useEffect(() => {
     if (SegmentationSettings?.results) {
       const metrics = ['recency', 'frequency', 'monetary'];
       metrics.forEach(metric => {
-        [20, 40, 60, 80].forEach(score => {
+        [1, 2, 3, 4].forEach(score => {
           setValue(
             `${metric}${score}`, 
-            SegmentationSettings.results[`${metric}${score === 20 ? 1 : score === 40 ? 2 : score === 60 ? 3 : 4}`]
+            SegmentationSettings.results[`${metric}${score}`]
           );
         });
       });
     }
   }, [SegmentationSettings, setValue]);
-
   useEffect(() => {
     const subscription = watch((value) => {
       const hasChanged = ['recency', 'frequency', 'monetary'].some(metric => 
-        [80, 60, 40, 20].some(score => 
+        [1, 2, 3, 4].some(score => 
           value[`${metric}${score}`] !== 
-          SegmentationSettings?.results?.[`${metric}${score === 20 ? 1 : score === 40 ? 2 : score === 60 ? 3 : 4}`]
+          SegmentationSettings?.results?.[`${metric}${score}`]
         )
       );
-      
       setIsScoringMethod(hasChanged);
     });
-    
     return () => subscription.unsubscribe();
   }, [watch, SegmentationSettings, setIsScoringMethod]);
-
   return (
     <Fieldset title="شیوه امتیازدهی">
       <p>در این قسمت می توانید بازه‌های پیش‌فرض امتیازدهی Frequency, Recency و Monetary را که در محاسبه نهایی تحلیل RFM استفاده می شوند را به دلخواه خود، تغییر دهید.</p>
@@ -78,7 +76,7 @@ const ScoringMethod = ({children, handler, setIsScoringMethod}: {
               indicator: "rtl:-rotate-90 rtl:data-[open=true]:rotate-90"
             }}
           >
-            <Recency register={register} getValues={getValues} />
+            <Recency register={register} control={control}/>
           </AccordionItem>
           <AccordionItem 
             key="f" 
@@ -93,7 +91,7 @@ const ScoringMethod = ({children, handler, setIsScoringMethod}: {
               indicator: "rtl:-rotate-90 rtl:data-[open=true]:rotate-90"
             }}
           >
-            <Frequency register={register} getValues={getValues} />
+            <Frequency register={register} control={control} />
           </AccordionItem>
           <AccordionItem 
             key="m" 
@@ -108,7 +106,7 @@ const ScoringMethod = ({children, handler, setIsScoringMethod}: {
               indicator: "rtl:-rotate-90 rtl:data-[open=true]:rotate-90"
             }}
           >
-            <Monetary register={register} getValues={getValues} />
+            <Monetary register={register} control={control} />
           </AccordionItem>
         </Accordion>
         {children}
