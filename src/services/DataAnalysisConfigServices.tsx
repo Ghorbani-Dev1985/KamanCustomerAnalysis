@@ -22,7 +22,7 @@ export async function GetBasicAnalysisSettings(){
         }}).then(({data}) => data)
 }
 
-export async function UpdateDataAnalysisSettings(data: object){
+export async function UpdateDataAnalysisSettingsApi(data: object){
         const token = await GetAccessTokenFromCookie()
         return Http.post("/update_config/" , data , {
             headers : {

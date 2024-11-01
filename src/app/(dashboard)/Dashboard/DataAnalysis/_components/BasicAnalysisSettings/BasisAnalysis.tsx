@@ -7,13 +7,13 @@ import { useBasicAnalysisSettings } from 'hooks/useDataAnalysisSettings';
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import toast from 'react-hot-toast';
 import { LiaSave } from 'react-icons/lia';
-import { UpdateDataAnalysisSettings } from 'services/DataAnalysisConfigServices';
+
 
 
 const BasisAnalysis = ({setIsOpenSingleAccordion} : {setIsOpenSingleAccordion: Dispatch<SetStateAction<boolean>>}) => {
       const {data: dataBasicAnalysisSettings} = useBasicAnalysisSettings()
       const queryClient = useQueryClient(); 
-      const {isPending ,  mutateAsync: mutateDataAnalysisSettings } = useMutation({mutationFn: UpdateDataAnalysisSettings});
+    //  const {isPending ,  mutateAsync: mutateDataAnalysisSettings } = useMutation({mutationFn: UpdateDataAnalysisSettings});
       console.log(dataBasicAnalysisSettings && dataBasicAnalysisSettings)
       const [basicAnalysisFormData, setBasicAnalysisFormData] = useState<{[key:string]: any}>({})
       const [equalSelect, setEqualSelect] = useState<{[key:string]:boolean}>({})
@@ -42,8 +42,8 @@ const BasisAnalysis = ({setIsOpenSingleAccordion} : {setIsOpenSingleAccordion: D
             }
             return data;
           });
-          const res = await mutateDataAnalysisSettings(formData)
-          console.log(res)
+        //  const res = await mutateDataAnalysisSettings(formData)
+         // console.log(res)
       //   if(!error.hasError){
       //     toast.success("تنظیمات با موفقیت ثبت شد")
       //     queryClient.invalidateQueries({ queryKey: ["getUpdateDataAnalysisSettings"] });
