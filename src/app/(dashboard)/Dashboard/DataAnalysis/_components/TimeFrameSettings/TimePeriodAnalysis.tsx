@@ -35,7 +35,7 @@ const TimePeriodAnalysis = ({setSelectTimePeriod , userTimePeriod , setUserTimeP
       <Radio value="datas" >
         <div className='flex-center gap-x-1.5'>
         <span>از ابتدای داده</span>
-         <HelpTooltip content='بازه زمانی تحلیل بر اساس ابتدای داده انتخاب می شود.'/>
+         <HelpTooltip content=' در این حالت، متد RFM، از اولین تاریخی که داده‌ی فروش در سیستم ثبت شده است، محاسبه خواهد شد'/>
         </div>
       </Radio>
       <div className='flex-center gap-x-2.5'>
